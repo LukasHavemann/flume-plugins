@@ -1,4 +1,4 @@
-package fr.figarocms.flume.geoip.exception;
+package fr.figarocms.flume.haproxy.exception;
 
 public class ProcessorException extends Exception {
 }

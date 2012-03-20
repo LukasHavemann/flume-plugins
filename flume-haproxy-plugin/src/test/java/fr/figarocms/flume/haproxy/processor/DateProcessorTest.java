@@ -1,4 +1,4 @@
-package fr.figarocms.flume.geoip.processor;
+package fr.figarocms.flume.haproxy.processor;
 
 import com.cloudera.flume.core.Event;
 import org.joda.time.DateTime;
@@ -28,6 +28,6 @@ public class DateProcessorTest {
     public void testProcess() throws Exception {
         processor.doProcess(e, "test", "01/Jul/2011:17:22:59.083");
         DateTime dt = new DateTime("2011-07-01T17:22:59.083").withZone(DateTimeZone.getDefault());
-        verify(e).set("geoip.test", dt.toString().getBytes());
+        verify(e).set("haproxy.test", dt.toString().getBytes());
     }
 }

@@ -1,6 +1,6 @@
 # Flume Filter Plugin
 
-Event Sink Decorator which filter Flume Event
+Event Sink Decorator which filter Flume Events
 
 ## Installation :
 
@@ -75,5 +75,5 @@ Conversely the following event satisfies all the predicates:
 
 ### Download :
 
-You can download jar at https://oss.sonatype.org/ searching for "flume-event-filter" :)
+You can download jar at https://oss.sonatype.org/ searching for "flume-filter-plugin" :-)
 

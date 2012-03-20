@@ -10,7 +10,7 @@
     <packaging>jar</packaging>
     <name>Flume RabbitMQ Plugin</name>
     <description>
-		Event Sink to send event to RabbitMQ
+		Event Sink to send events to RabbitMQ
     </description>
     <url>https://github.com/figarocms/flume-plugins/flume-rabbitmq-plugin</url>
 

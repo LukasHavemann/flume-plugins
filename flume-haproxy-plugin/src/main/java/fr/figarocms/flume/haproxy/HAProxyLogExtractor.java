@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package fr.figarocms.flume.geoip;
+package fr.figarocms.flume.haproxy;
 
 import com.cloudera.flume.conf.Context;
 import com.cloudera.flume.conf.SinkFactory.SinkDecoBuilder;
@@ -24,8 +24,8 @@ import com.cloudera.flume.core.EventSink;
 import com.cloudera.flume.core.EventSinkDecorator;
 import com.cloudera.util.Pair;
 import com.google.common.base.Preconditions;
-import fr.figarocms.flume.geoip.processor.DateProcessor;
-import fr.figarocms.flume.geoip.processor.HeaderProcessor;
+import fr.figarocms.flume.haproxy.processor.DateProcessor;
+import fr.figarocms.flume.haproxy.processor.HeaderProcessor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -34,16 +34,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class HaproxyLogExtractor<S extends EventSink> extends EventSinkDecorator<S> {
+public class HAProxyLogExtractor<S extends EventSink> extends EventSinkDecorator<S> {
 
-    static final Logger LOG = LoggerFactory.getLogger(HaproxyLogExtractor.class);
+    static final Logger LOG = LoggerFactory.getLogger(HAProxyLogExtractor.class);
 
     private Mapping mapping;
 
     /**
      * @param s : SinkDecorator context from Flume
      */
-    public HaproxyLogExtractor(S s) {
+    public HAProxyLogExtractor(S s) {
 
         super(s);
 
@@ -93,8 +93,8 @@ public class HaproxyLogExtractor<S extends EventSink> extends EventSinkDecorator
             // construct a new parameterized flume
             @Override
             public EventSinkDecorator<EventSink> build(Context context, String... argv) {
-                Preconditions.checkArgument(argv.length == 0, "usage: geoip");
-                return new HaproxyLogExtractor<EventSink>(null);
+                Preconditions.checkArgument(argv.length == 0, "usage: haproxy");
+                return new HAProxyLogExtractor<EventSink>(null);
             }
         };
     }
@@ -107,7 +107,7 @@ public class HaproxyLogExtractor<S extends EventSink> extends EventSinkDecorator
     public static List<Pair<String, SinkDecoBuilder>> getDecoratorBuilders() {
         List<Pair<String, SinkDecoBuilder>> builders =
                 new ArrayList<Pair<String, SinkDecoBuilder>>();
-        builders.add(new Pair<String, SinkDecoBuilder>("geoip",
+        builders.add(new Pair<String, SinkDecoBuilder>("haproxy",
                 builder()));
         return builders;
     }

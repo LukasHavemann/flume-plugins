@@ -1,4 +1,4 @@
-package fr.figarocms.flume.geoip.processor;
+package fr.figarocms.flume.haproxy.processor;
 
 import com.cloudera.flume.core.Event;
 

@@ -1,4 +1,4 @@
-package fr.figarocms.flume.geoip.processor;
+package fr.figarocms.flume.haproxy.processor;
 
 import com.cloudera.flume.core.Event;
 import org.junit.Before;
@@ -25,8 +25,8 @@ public class HeaderProcessorTest {
     @Test
     public void testProcess() throws Exception {
         processor.doProcess(e, "test", "blah|plo p|pi f");
-        verify(e).set("geoip.test.0", "blah".getBytes());
-        verify(e).set("geoip.test.1", "plo p".getBytes());
-        verify(e).set("geoip.test.2", "pi f".getBytes());
+        verify(e).set("haproxy.test.0", "blah".getBytes());
+        verify(e).set("haproxy.test.1", "plo p".getBytes());
+        verify(e).set("haproxy.test.2", "pi f".getBytes());
     }
 }

@@ -1,4 +1,4 @@
-package fr.figarocms.flume.geoip.utils;
+package fr.figarocms.flume.haproxy.utils;
 
 import java.nio.ByteBuffer;
 

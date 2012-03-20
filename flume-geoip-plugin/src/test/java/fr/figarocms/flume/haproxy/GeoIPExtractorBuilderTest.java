@@ -1,4 +1,4 @@
-package fr.figarocms.flume.geoip;
+package fr.figarocms.flume.haproxy;
 
 
 import com.cloudera.flume.conf.Context;

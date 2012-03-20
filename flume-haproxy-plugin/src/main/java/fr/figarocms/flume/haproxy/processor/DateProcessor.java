@@ -1,7 +1,7 @@
-package fr.figarocms.flume.geoip.processor;
+package fr.figarocms.flume.haproxy.processor;
 
 import com.cloudera.flume.core.Event;
-import fr.figarocms.flume.geoip.exception.ProcessorException;
+import fr.figarocms.flume.haproxy.exception.ProcessorException;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
@@ -16,7 +16,7 @@ public class DateProcessor extends AbstractProcessor {
 
     public DateProcessor() {
         // Ha-Proxy Logs use UTC timezone : "get_gmtime(s->logs.accept_date.tv_sec, &tm);"
-        // cf : http://git.1wt.eu/web?p=geoip-1.4.git;a=blob_plain;f=src/proto_http.c;hb=HEAD
+        // cf : http://git.1wt.eu/web?p=haproxy-1.4.git;a=blob_plain;f=src/proto_http.c;hb=HEAD
         this.df = DateTimeFormat.forPattern(dateFormat).withLocale(Locale.US);
     }
 

@@ -10,7 +10,9 @@
 	<artifactId>flume-hbase-plugin</artifactId>
 	<packaging>jar</packaging>
 	<name>Flume HBase Plugin</name>
-	<description>Flume plugin to send data to HBase</description>
+	<description>
+		Event Sink to send events to HBase.
+	</description>
 	<url>https://github.com/figarocms/flume-plugins/flume-hbase-plugin</url>
 
 	<properties>

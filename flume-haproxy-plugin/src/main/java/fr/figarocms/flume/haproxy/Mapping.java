@@ -1,9 +1,9 @@
-package fr.figarocms.flume.geoip;
+package fr.figarocms.flume.haproxy;
 
 import com.cloudera.flume.core.Event;
-import fr.figarocms.flume.geoip.exception.ProcessorException;
-import fr.figarocms.flume.geoip.processor.Processor;
-import fr.figarocms.flume.geoip.processor.SimpleProcessor;
+import fr.figarocms.flume.haproxy.exception.ProcessorException;
+import fr.figarocms.flume.haproxy.processor.Processor;
+import fr.figarocms.flume.haproxy.processor.SimpleProcessor;
 import jregex.Matcher;
 import jregex.Pattern;
 import org.slf4j.Logger;
@@ -25,7 +25,7 @@ public class Mapping {
     public Mapping() {
         this.list = new ArrayList<MappingEntry>();
 
-        //named regex parsing geoip syslog format access log
+        //named regex parsing haproxy syslog format access log
         String rx = "^(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) +\\d{1,2} \\d{2}:\\d{2}:\\d{2} ([-\\w]+ )?\\w+\\[\\d+\\]: "
                 + "({clientIp}\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}):"
                 + "({clientPort}\\d+) "
@@ -56,7 +56,7 @@ public class Mapping {
     /**
      * augment event with qualified values form body
      *
-     * @param e : event from Flume with geoip syslog body
+     * @param e : event from Flume with haproxy syslog body
      */
     public void process(Event e) {
 

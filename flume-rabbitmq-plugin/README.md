@@ -1,6 +1,6 @@
 # Flume RabbitMQ Plugin
 
-Event Sink to send event to RabbitMQ
+Event Sink to send events to RabbitMQ
 
 ## Installation :
 
@@ -43,4 +43,4 @@ This sink declaration will send events as json events to the topic "sample" with
 
 ### Download :
 
-You can download jar at https://oss.sonatype.org/ searching for "flume-rabbitmq-sink" :)
+You can download jar at https://oss.sonatype.org/ searching for "flume-rabbitmq-plugin" :-)

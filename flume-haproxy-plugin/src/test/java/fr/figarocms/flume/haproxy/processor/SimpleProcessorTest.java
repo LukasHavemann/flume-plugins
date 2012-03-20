@@ -1,4 +1,4 @@
-package fr.figarocms.flume.geoip.processor;
+package fr.figarocms.flume.haproxy.processor;
 
 import com.cloudera.flume.core.Event;
 import org.junit.Before;
@@ -25,6 +25,6 @@ public class SimpleProcessorTest {
     @Test
     public void testProcess() throws Exception {
         processor.doProcess(e, "test", "plop paf");
-        verify(e).set("geoip.test", "plop paf".getBytes());
+        verify(e).set("haproxy.test", "plop paf".getBytes());
     }
 }

@@ -1,7 +1,7 @@
-package fr.figarocms.flume.geoip.processor;
+package fr.figarocms.flume.haproxy.processor;
 
 import com.cloudera.flume.core.Event;
-import fr.figarocms.flume.geoip.exception.ProcessorException;
+import fr.figarocms.flume.haproxy.exception.ProcessorException;
 
 public class HeaderProcessor extends AbstractProcessor {
 
