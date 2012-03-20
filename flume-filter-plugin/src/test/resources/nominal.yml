@@ -1,0 +1,31 @@
+host:
+  value: server1
+
+priority:
+  values:
+    - INFO
+    - ERROR
+
+body:
+  pattern: test
+
+attributes:
+- name: attribute1
+  values:
+    - '200'
+    - '204'
+
+- name: attribute2
+  dateFormat: YYYY-MM-DD
+
+- name: attribute3
+  pattern: 'pattern/*'
+  parameters:
+  - name: parameter1
+    value: value1
+  - name: parameter2
+    values:
+      - value2
+      - value3
+  - name: parameter3
+    dateFormat: YYYY-MM
