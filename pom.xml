@@ -165,6 +165,7 @@
         <module>flume-haproxy-plugin</module>
         <module>flume-rabbitmq-plugin</module>
         <module>flume-hbase-plugin</module>
+        <module>flume-mapper-plugin</module>
     </modules>
 
 </project>
