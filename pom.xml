@@ -160,12 +160,12 @@
     </distributionManagement>
 
     <modules>
-        <module>flume-filter-plugin</module>
-        <module>flume-geoip-plugin</module>
-        <module>flume-haproxy-plugin</module>
-        <module>flume-rabbitmq-plugin</module>
-        <module>flume-hbase-plugin</module>
-        <module>flume-mapper-plugin</module>
+		<module>flume-filter-plugin</module>
+		<module>flume-formatter-plugin</module>
+		<module>flume-geoip-plugin</module>
+		<module>flume-haproxy-plugin</module>
+		<module>flume-rabbitmq-plugin</module>
+		<module>flume-hbase-plugin</module>
     </modules>
 
 </project>

@@ -1,0 +1,9 @@
+body:
+  type: string
+
+priority:
+  type: string
+
+attributes:
+  - name: attribute1
+    type: string
