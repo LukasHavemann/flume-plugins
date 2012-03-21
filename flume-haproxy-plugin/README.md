@@ -11,7 +11,7 @@ Event Sink Decorator which parse [HAProxy log format](http://code.google.com/p/h
 ```
   <property>
     <name>flume.plugin.classes</name>                                         
-    <value>fr.figarocms.flume.extractor.HAProxyLogExtractor</value>
+    <value>fr.figarocms.flume.haproxy.HAProxyLogExtractor</value>
     <description>Comma separated list of plugins</description>
   </property>
 ```

@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package fr.figarocms.flume.haproxy;
+package fr.figarocms.flume.geoip;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -26,7 +26,8 @@ import com.cloudera.flume.core.Event;
 import com.cloudera.flume.core.EventSink;
 import com.cloudera.flume.core.EventSinkDecorator;
 import com.cloudera.util.Pair;
-import fr.figarocms.flume.utils.Bytes;
+
+import fr.figarocms.flume.geoip.utils.Bytes;
 
 import com.maxmind.geoip.Location;
 import com.maxmind.geoip.LookupService;
@@ -43,7 +44,7 @@ public class GeoIPExtractor<S extends EventSink> extends EventSinkDecorator<S> {
     private LookupService lookupService;
 
     private String attributeName = "ip"; //event Field where to read IP address
-    private String dstPrefix = "haproxy"; //prefix for Fields of geoloc information in event
+    private String dstPrefix = "geoip"; //prefix for Fields of geoloc information in event
 
     /**
      * @param s : event Sink from Flume
@@ -128,13 +129,13 @@ public class GeoIPExtractor<S extends EventSink> extends EventSinkDecorator<S> {
 
     /**
      * This is a special function used by the SourceFactory to pull in this class
-     * as a flume-haproxy-haproxy decorator.
+     * as a flume-geoip-plugin decorator.
      * @return a list of GeoIPExtractorBuilder
      */
     public static List<Pair<String, SinkDecoBuilder>> getDecoratorBuilders() {
         List<Pair<String, SinkDecoBuilder>> builders =
                 new ArrayList<Pair<String, SinkDecoBuilder>>();
-        builders.add(new Pair<String, SinkDecoBuilder>("haproxy",
+        builders.add(new Pair<String, SinkDecoBuilder>("geoip",
                 builder()));
         return builders;
     }

@@ -11,7 +11,7 @@ Event Sink Decorator which augments Flume Event with IP localisation based on [M
 ```
   <property>
     <name>flume.plugin.classes</name>                                         
-    <value>fr.figarocms.flume.haproxy.GeoIPExtractor</value>
+    <value>fr.figarocms.flume.geoip.GeoIPExtractor</value>
     <description>Comma separated list of plugins</description>
   </property>
 ```

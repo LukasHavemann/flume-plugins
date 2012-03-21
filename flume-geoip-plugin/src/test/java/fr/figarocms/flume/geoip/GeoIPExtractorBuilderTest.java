@@ -1,10 +1,13 @@
-package fr.figarocms.flume.haproxy;
+package fr.figarocms.flume.geoip;
 
 
 import com.cloudera.flume.conf.Context;
 import com.cloudera.flume.core.EventSink;
 import junit.framework.Assert;
 import org.junit.Test;
+
+import fr.figarocms.flume.geoip.GeoIPExtractor;
+import fr.figarocms.flume.geoip.GeoIPExtractorBuilder;
 
 import static org.mockito.Mockito.mock;
 

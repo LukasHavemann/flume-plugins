@@ -34,6 +34,7 @@ import org.apache.hadoop.hbase.client.Result;
 import org.apache.hadoop.hbase.util.Bytes;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,6 +48,7 @@ import com.cloudera.util.Clock;
 /**
  * Test the hbase sink writes events to a table/family properly
  */
+@Ignore
 public class TestHBaseSink {
   private static HBaseTestEnv hbaseEnv;
   public static Logger LOG = LoggerFactory.getLogger(TestHBaseSink.class);

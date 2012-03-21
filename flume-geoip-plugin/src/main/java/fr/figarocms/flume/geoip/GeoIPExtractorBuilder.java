@@ -1,4 +1,4 @@
-package fr.figarocms.flume.haproxy;
+package fr.figarocms.flume.geoip;
 
 import com.cloudera.flume.conf.Context;
 import com.cloudera.flume.conf.SinkFactory;
@@ -20,7 +20,7 @@ public class GeoIPExtractorBuilder extends SinkFactory.SinkDecoBuilder {
      */
     @Override
     public GeoIPExtractor<EventSink> build(Context context, String... argv) {
-        Preconditions.checkArgument(argv.length >= 1 && argv.length <= 3, "usage: haproxy(filename, field, prefix)");
+        Preconditions.checkArgument(argv.length >= 1 && argv.length <= 3, "usage: geoip(filename, field, prefix)");
 
         URL resource = this.getClass().getResource(argv[0]);
         File file;

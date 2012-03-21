@@ -1,9 +1,12 @@
-package fr.figarocms.flume.haproxy;
+package fr.figarocms.flume.geoip;
 
 import com.cloudera.flume.core.Event;
 import com.cloudera.flume.core.EventImpl;
 import com.cloudera.flume.handlers.debug.MemorySinkSource;
-import fr.figarocms.flume.utils.Bytes;
+
+import fr.figarocms.flume.geoip.GeoIPExtractor;
+import fr.figarocms.flume.geoip.utils.Bytes;
+
 import com.maxmind.geoip.Location;
 import com.maxmind.geoip.LookupService;
 import junit.framework.Assert;
@@ -55,11 +58,11 @@ public class GeoIPExtractorTest {
         e.set("ip", "213.52.50.8".getBytes());
         openAppendClose(e);
 
-        Assert.assertEquals("Norway", new String(e.get("haproxy.countryName")));
-        Assert.assertEquals("NW", new String(e.get("haproxy.countryCode")));
-        Assert.assertEquals("Oslo", new String(e.get("haproxy.city")));
-        Assert.assertEquals(62F, Bytes.toFloat(e.get("haproxy.latitude")));
-        Assert.assertEquals(10F, Bytes.toFloat(e.get("haproxy.longitude")));
+        Assert.assertEquals("Norway", new String(e.get("geoip.countryName")));
+        Assert.assertEquals("NW", new String(e.get("geoip.countryCode")));
+        Assert.assertEquals("Oslo", new String(e.get("geoip.city")));
+        Assert.assertEquals(62F, Bytes.toFloat(e.get("geoip.latitude")));
+        Assert.assertEquals(10F, Bytes.toFloat(e.get("geoip.longitude")));
 
     }
 

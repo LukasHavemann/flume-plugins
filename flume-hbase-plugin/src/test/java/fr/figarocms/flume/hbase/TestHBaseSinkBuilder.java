@@ -20,6 +20,7 @@ package fr.figarocms.flume.hbase;
 import static org.junit.Assert.assertEquals;
 
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,6 +35,7 @@ import fr.figarocms.flume.hbase.HBaseSink.QualifierSpec;
 /**
  * Test the hbase sink writes events to a table/family properly
  */
+@Ignore
 public class TestHBaseSinkBuilder {
   public static Logger LOG = LoggerFactory
       .getLogger(TestHBaseSinkBuilder.class);
