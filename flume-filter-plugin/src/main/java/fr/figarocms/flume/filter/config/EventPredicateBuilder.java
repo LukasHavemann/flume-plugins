@@ -13,8 +13,6 @@ import static com.google.common.collect.Lists.newArrayList;
 public class EventPredicateBuilder {
 
   private List<Predicate<Event>> predicates;
-//  private List<AttributePredicateBuilder> attributes;
-
 
   public EventPredicateBuilder() {
     this.predicates = newArrayList();
