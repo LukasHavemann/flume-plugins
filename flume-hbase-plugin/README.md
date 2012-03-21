@@ -2,7 +2,7 @@
 
 Event Sink to send events to HBase.
 
-This plugin is a backport of https://github.com/cloudera/flume/tree/master/plugins/flume-plugin-hbasesink
+This plugin is a backport of [Cloudera flume-plugin-hbasesink](https://github.com/cloudera/flume/tree/master/plugins/flume-plugin-hbasesink)
 for HBase version : 0.90.4-cdh3u3
 
 

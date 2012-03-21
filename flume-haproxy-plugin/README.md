@@ -1,6 +1,6 @@
 # Flume HAProxy Plugin
 
-Event Sink Decorator which parse HAProxy log format in order to augment Flume Event attributes
+Event Sink Decorator which parse [HAProxy log format](http://code.google.com/p/haproxy-docs/wiki/HTTPLogFormat) in order to augment Flume Event attributes
 
 ## Installation :
 
