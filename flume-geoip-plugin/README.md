@@ -1,6 +1,6 @@
 # Flume Geoip Extractor
 
-Event Sink Decorator which augments Flume Event with IP localisation based on MaxMind GeoIP (http://www.maxmind.com/app/ip-location)
+Event Sink Decorator which augments Flume Event with IP localisation based on [MaxMind GeoIP](http://www.maxmind.com/app/ip-location)
 
 ## Installation :
 
