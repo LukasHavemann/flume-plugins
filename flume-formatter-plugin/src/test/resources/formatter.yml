@@ -6,4 +6,26 @@ priority:
 
 attributes:
   - name: attribute1
+    type: integer
+
+  - name: attribute2
+    type: long
+
+  - name: attribute3
+    type: float
+
+  - name: attribute4
+    type: double
+
+  - name: attribute5
+    type: boolean
+
+  - name: attribute6
+    type: boolean
+
+  - name: attribute6
+    type: date
+    format: YYYY-MM-dd
+
+  - pattern: 'attribute*'
     type: string
