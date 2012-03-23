@@ -8,7 +8,6 @@ import com.cloudera.flume.conf.FlumeSpecException;
 import com.cloudera.flume.conf.SinkFactory;
 import com.cloudera.flume.core.BackOffFailOverSink;
 import com.cloudera.flume.core.EventSink;
-import com.cloudera.flume.core.FailOverSink;
 import com.cloudera.flume.handlers.text.FormatFactory;
 import com.cloudera.flume.handlers.text.output.DebugOutputFormat;
 import com.cloudera.flume.handlers.text.output.OutputFormat;
@@ -27,13 +26,18 @@ public class RabbitMQFailoverSinkBuilder extends SinkFactory.SinkBuilder {
 
   @Override
   public EventSink build(Context context, String... argv) {
-    Preconditions.checkArgument(argv.length >= 7 && argv.length <= 8,
-                                "usage: rabbitFailover(addresses, username, password, vhost, exchange, exchange_type, routing_key[, format])");
+    Preconditions.checkArgument(argv.length >= 7 && argv.length <= 9,
+                                  "usage: rabbitFailover(address, username, password, vhost, exchange, exchange_type, routing_key[, format, media_type])");
     Preconditions.checkArgument(!isNullOrEmpty(argv[0]),
                                 "Invalid configuration: 'addresses' must be non-null or empty.");
-    // Define output format
+    String mediaType = null;
+    // Define message media type
     OutputFormat fmt = DebugOutputFormat.builder().create();
-    if (argv.length == 8) {
+    if (argv.length == 9) {
+      mediaType = argv[8];
+    }
+    // Define output format
+    if (argv.length >= 8) {
       try {
         fmt = FlumeBuilder.createFormat(FormatFactory.get(), argv[7]);
       } catch (FlumeSpecException e) {
@@ -44,22 +48,23 @@ public class RabbitMQFailoverSinkBuilder extends SinkFactory.SinkBuilder {
     }
 
     final String[] addresses = argv[0].split(",");
-    return failover(addresses, argv[1], argv[2], argv[3], argv[4], argv[5], argv[6], fmt);
+    return failover(addresses, argv[1], argv[2], argv[3], argv[4], argv[5], argv[6], fmt, mediaType);
   }
 
   private EventSink failover(String[] addresses, String username, String password, String vhost, String exchange,
-                             String exchange_type, String routing_key, OutputFormat format) {
+                             String exchange_type, String routing_key, OutputFormat format, String mediaType) {
     Producer
         producer =
         new SimpleProducer(addresses[0], username, password, vhost, exchange, exchange_type,
                            routing_key);
-    final RabbitMQSink rabbit = new RabbitMQSink(producer, format);
+    final RabbitMQSink rabbit = new RabbitMQSink(producer, format, mediaType);
     if (addresses.length == 1) {
       return rabbit;
     } else {
       addresses = Arrays.copyOfRange(addresses, 1, addresses.length);
       return new BackOffFailOverSink(rabbit,
-                              failover(addresses, username, password, vhost, exchange, exchange_type, routing_key, format));
+                                     failover(addresses, username, password, vhost, exchange, exchange_type,
+                                              routing_key, format, mediaType));
     }
   }
 

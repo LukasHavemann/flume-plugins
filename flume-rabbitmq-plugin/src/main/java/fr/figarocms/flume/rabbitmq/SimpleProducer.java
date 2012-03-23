@@ -2,6 +2,7 @@ package fr.figarocms.flume.rabbitmq;
 
 import com.google.common.base.Preconditions;
 
+import com.rabbitmq.client.AMQP;
 import com.rabbitmq.client.Address;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
@@ -14,8 +15,8 @@ import java.io.IOException;
 
 import static com.google.common.base.Strings.isNullOrEmpty;
 import static com.rabbitmq.client.Address.parseAddress;
-import static com.rabbitmq.client.MessageProperties.PERSISTENT_TEXT_PLAIN;
 import static java.lang.String.format;
+
 
 /**
  * <p> Base implementation of a RabbitMQ producer sending durable message to an exchange or directly to a queue if no
@@ -92,9 +93,10 @@ public class SimpleProducer implements Producer {
   }
 
   @Override
-  public void publish(byte[] msg) throws IOException {
+  public void publish(byte[] msg, String mediaType) throws IOException {
     try {
-      channel.basicPublish(exchange, routingKey, PERSISTENT_TEXT_PLAIN, msg);
+      final AMQP.BasicProperties properties = persistentMediaTypeProperties(mediaType);
+      channel.basicPublish(exchange, routingKey, properties, msg);
       if (LOG.isDebugEnabled()) {
         LOG.debug(format("Publish event %s", msg));
       }
@@ -104,6 +106,16 @@ public class SimpleProducer implements Producer {
       }
       throw new IOException(e);
     }
+  }
+
+  private AMQP.BasicProperties persistentMediaTypeProperties(String mediaType) {
+    return new AMQP.BasicProperties((isNullOrEmpty(mediaType) ? "application/octet-stream" : mediaType),
+                          null,
+                          null,
+                          2,
+                          0, null, null, null,
+                          null, null, null, null,
+                          null, null);
   }
 
   private void declareQueueOrExchange(Channel channel, String exchange, String type, String routingKey)

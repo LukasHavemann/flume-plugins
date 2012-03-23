@@ -18,17 +18,36 @@ Event Sink to send events to RabbitMQ
 ## Usage :
 
 ```
-rabbit(uri, exchange, exchange_type, routing_key[, format]);
+rabbit(address, username, password, vhost, exchange, exchange_type, routing_key[, format, media_type])
 
 ```
 
- * uri: AMQP uri to create connection to RabbitMQ (see http://www.rabbitmq.com/uri-spec.html)
+ * address: an address to create connection to an AMQP broker (For example : 'hostname1:portnumber1')
+ * username: the username used to create connections to an AMQP broker
+ * password: the password used to create connections to an AMQP broker
+ * vhost: the virtual host used to create connections tto an AMQP broker
  * exchange: exchange where messages are sent
  * exchange_type: type of the exchange (direct, topic, fanout, headers)
  * routing_key : routing_key or queue name if no exchange are defined (see http://www.rabbitmq.com/tutorials/tutorial-four-java.html)
- * format : output format supported by flume (see http://archive.cloudera.com/cdh/3/flume/UserGuide/#_output_format) (optionnal, debug as default)
+ * format : output format supported by flume (see http://archive.cloudera.com/cdh/3/flume/UserGuide/#_output_format) (optional, debug as default)
+ * media_type : media type declaration for messages formatted with the output format (optional, 'application/octet-stream by default)
 
+or
 
+```
+rabbitFailover(addresses, username, password, vhost, exchange, exchange_type, routing_key[, format, media_type])"
+
+```
+
+ * addresses: an address list to create connection to an AMQP broker (For example : 'hostname1:portnumber1,hostname2:portnumber2')
+ * username: the username used to create connections to an AMQP broker
+ * password: the password used to create connections to an AMQP broker
+ * vhost: the virtual host used to create connections tto an AMQP broker
+ * exchange: exchange where messages are sent
+ * exchange_type: type of the exchange (direct, topic, fanout, headers)
+ * routing_key : routing_key or queue name if no exchange are defined (see http://www.rabbitmq.com/tutorials/tutorial-four-java.html)
+ * format : output format supported by flume (see http://archive.cloudera.com/cdh/3/flume/UserGuide/#_output_format) (optional, debug as default)
+ * media_type : media type declaration for messages formatted with the output format (optional, 'application/octet-stream by default)
 
 ### Concrete example :
 

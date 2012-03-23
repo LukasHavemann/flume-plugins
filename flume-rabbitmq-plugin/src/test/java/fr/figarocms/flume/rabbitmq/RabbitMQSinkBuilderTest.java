@@ -67,7 +67,7 @@ public class RabbitMQSinkBuilderTest {
   @Test(expected = IllegalArgumentException.class)
   public void buildWithFiveArgs() throws Exception {
     // When
-    builder.build(context, new String[]{"arg1", "arg2", "arg3","arg4", "arg5"});
+    builder.build(context, new String[]{"arg1", "arg2", "arg3", "arg4", "arg5"});
 
     // Then IllegalArgumentException is thrown
   }
@@ -75,7 +75,7 @@ public class RabbitMQSinkBuilderTest {
   @Test(expected = IllegalArgumentException.class)
   public void buildWithSixArgs() throws Exception {
     // When
-    builder.build(context, new String[]{"arg1", "arg2", "arg3","arg4", "arg5", "arg6"});
+    builder.build(context, new String[]{"arg1", "arg2", "arg3", "arg4", "arg5", "arg6"});
 
     // Then IllegalArgumentException is thrown
   }
@@ -94,7 +94,7 @@ public class RabbitMQSinkBuilderTest {
 
 
   @Test(expected = IllegalArgumentException.class)
-  public void buildWithInvalidOutputFormat() throws Exception {
+  public void buildWithEightArgsInvalidFormat() throws Exception {
     // When
     builder.build(context, new String[]{"arg1", "arg2", "arg3", "arg4", "arg5", "arg6", "arg7", "arg8"});
 
@@ -102,9 +102,23 @@ public class RabbitMQSinkBuilderTest {
   }
 
   @Test
-  public void buildWithValidOutputFormat() throws Exception {
+  public void buildWithEightArgsValidFormat() throws Exception {
     // When
-    EventSink sink = builder.build(context, new String[]{"arg1", "arg2", "arg3", "arg4", "arg5", "arg6", "arg7", "json"});
+    EventSink
+        sink =
+        builder.build(context, new String[]{"arg1", "arg2", "arg3", "arg4", "arg5", "arg6", "arg7", "json"});
+
+    // Then
+    assertNotNull(sink);
+  }
+
+  @Test
+  public void buildWithNineArgs() throws Exception {
+    // When
+    final
+    EventSink
+        sink =
+        builder.build(context, new String[]{"arg1", "arg2", "arg3", "arg4", "arg5", "arg6", "arg7", "json", "arg9"});
 
     // Then
     assertNotNull(sink);

@@ -8,6 +8,6 @@ public interface Producer {
 
   void close() throws IOException;
 
-  void publish(byte[] msg) throws IOException;
+  void publish(byte[] msg, String mediaType) throws IOException;
 
 }

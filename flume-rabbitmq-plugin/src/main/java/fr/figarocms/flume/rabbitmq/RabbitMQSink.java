@@ -6,6 +6,7 @@ import com.cloudera.flume.core.EventSink;
 import com.cloudera.flume.handlers.text.output.OutputFormat;
 import com.cloudera.util.Pair;
 
+import org.apache.hadoop.thirdparty.guava.common.base.Strings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static java.lang.String.format;
+import static org.apache.hadoop.thirdparty.guava.common.base.Strings.isNullOrEmpty;
 
 public class RabbitMQSink extends EventSink.Base {
 
@@ -22,17 +24,19 @@ public class RabbitMQSink extends EventSink.Base {
   
   private Producer producer;
   private OutputFormat format;
+  private String mediaType;
 
-  public RabbitMQSink(Producer producer, OutputFormat format) {
+  public RabbitMQSink(Producer producer, OutputFormat format, String mediaType) {
     this.producer = producer;
     this.format = format;
+    this.mediaType = mediaType;
   }
 
   @Override
   public void append(Event e) throws IOException, InterruptedException {
     ByteArrayOutputStream bos = new ByteArrayOutputStream();
     format.format(bos, e);
-    producer.publish(bos.toByteArray());
+    producer.publish(bos.toByteArray(), mediaType);
   }
 
   @Override

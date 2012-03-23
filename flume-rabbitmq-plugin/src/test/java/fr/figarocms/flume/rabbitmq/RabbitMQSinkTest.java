@@ -27,10 +27,11 @@ public class RabbitMQSinkTest {
   private Producer producer;
   @Mock
   private OutputFormat format;
+  private String mediaType ="application/json";
 
   @Before
   public void setUp() throws Exception {
-    sink = new RabbitMQSink(producer, format);
+    sink = new RabbitMQSink(producer, format, mediaType);
   }
 
   @Test
@@ -61,7 +62,7 @@ public class RabbitMQSinkTest {
     InOrder order = Mockito.inOrder(format, producer);
     ArgumentCaptor<ByteArrayOutputStream> captor = ArgumentCaptor.forClass(ByteArrayOutputStream.class);
     order.verify(format).format(captor.capture(), Mockito.eq(event));
-    order.verify(producer).publish(captor.getValue().toByteArray());
+    order.verify(producer).publish(captor.getValue().toByteArray(), mediaType);
     order.verifyNoMoreInteractions();
   }
 }

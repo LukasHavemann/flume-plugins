@@ -92,7 +92,7 @@ public class RabbitMQFailoverSinkBuilderTest {
 
 
   @Test(expected = IllegalArgumentException.class)
-  public void buildWithInvalidOutputFormat() throws Exception {
+  public void buildWithEightArgsInvalidFormat() throws Exception {
     // When
     builder.build(context, new String[]{"arg1", "arg2", "arg3", "arg4", "arg5", "arg6", "arg7", "arg8"});
 
@@ -100,7 +100,7 @@ public class RabbitMQFailoverSinkBuilderTest {
   }
 
   @Test
-  public void buildWithValidOutputFormat() throws Exception {
+  public void buildWithEightArgsValidFormat() throws Exception {
     // When
     EventSink
         sink =
@@ -111,21 +111,36 @@ public class RabbitMQFailoverSinkBuilderTest {
   }
 
   @Test
-  public void buildWithMultipleAddresses() throws Exception {
+  public void buildWithNineArgs() throws Exception {
     // When
     EventSink
         sink =
-        builder.build(context, new String[]{"host1,host2,host3", "arg2", "arg3", "arg4", "arg5", "arg6", "arg7", "json"});
+        builder.build(context, new String[]{"arg1", "arg2", "arg3", "arg4", "arg5", "arg6", "arg7", "json", "arg9"});
 
     // Then
     assertNotNull(sink);
   }
+
+  @Test
+  public void buildWithMultipleAddresses() throws Exception {
+    // When
+    EventSink
+        sink =
+        builder
+            .build(context, new String[]{"host1,host2,host3", "arg2", "arg3", "arg4", "arg5", "arg6", "arg7", "json"});
+
+    // Then
+    assertNotNull(sink);
+  }
+
   @Test
   public void buildWithMultipleAddressesWithPorts() throws Exception {
     // When
     EventSink
         sink =
-        builder.build(context, new String[]{"host1:1111,host2:1112,host3:1113", "arg2", "arg3", "arg4", "arg5", "arg6", "arg7", "json"});
+        builder.build(context,
+                      new String[]{"host1:1111,host2:1112,host3:1113", "arg2", "arg3", "arg4", "arg5", "arg6", "arg7",
+                                   "json"});
 
     // Then
     assertNotNull(sink);
