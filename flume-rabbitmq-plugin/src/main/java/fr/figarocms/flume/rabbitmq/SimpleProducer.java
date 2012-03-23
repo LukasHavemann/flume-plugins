@@ -1,8 +1,8 @@
 package fr.figarocms.flume.rabbitmq;
 
 import com.google.common.base.Preconditions;
-import com.google.common.base.Strings;
 
+import com.rabbitmq.client.Address;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
@@ -11,8 +11,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
-import java.net.URI;
 
+import static com.google.common.base.Strings.isNullOrEmpty;
+import static com.rabbitmq.client.Address.parseAddress;
 import static com.rabbitmq.client.MessageProperties.PERSISTENT_TEXT_PLAIN;
 import static java.lang.String.format;
 
@@ -24,6 +25,8 @@ public class SimpleProducer implements Producer {
 
   protected static Logger LOG = LoggerFactory.getLogger(SimpleProducer.class);
 
+  private static int DEFAULT_PORT = 5672;
+
   private ConnectionFactory factory;
   private Connection connection;
   private Channel channel;
@@ -31,55 +34,100 @@ public class SimpleProducer implements Producer {
   private String type;
   private String routingKey;
 
-  public SimpleProducer(String uri, String exchange, String type, String routingKey) {
-    Preconditions.checkNotNull(uri, "Invalid configuration: 'uri' must be non-null.");
-    this.exchange = Preconditions.checkNotNull(exchange, "Invalid configuration: 'exchange' must be non-null.");
-    this.type = Preconditions.checkNotNull(type, "Invalid configuration: 'type' must be non-null.");
-    this.routingKey = Preconditions.checkNotNull(routingKey, "Invalid configuration: 'routingKey' must be non-null.");
+  public SimpleProducer(String address, String username, String password, String vhost, String exchange, String type,
+                        String routingKey) {
+    checkPreconditions(address, username, password, vhost, exchange, routingKey);
+    Address addr = parseAddress(address);
     factory = new ConnectionFactory();
-    try {
-      factory.setUri(URI.create(uri));
-    } catch (Exception e) { // Catch all exception
-      throw new IllegalArgumentException(
-          "Invalid configuration: 'uri' is not an amqp uri.\nSee http://www.rabbitmq.com/uri-spec.html.", e);
-    }
+    factory.setUsername(username);
+    factory.setPassword(password);
+    factory.setVirtualHost(vhost);
+    factory.setHost(addr.getHost());
+    factory.setPort(addr.getPort() == -1 ? DEFAULT_PORT : addr.getPort());
+    this.exchange = exchange;
+    this.type = type;
+    this.routingKey = routingKey;
   }
+
 
   @Override
   public void open() throws IOException {
-    Preconditions.checkState(connection == null, "double open not permitted");
-    connection = factory.newConnection();
-    channel = connection.createChannel();
-    if (LOG.isDebugEnabled()) {
-      LOG.debug(format("Open connection %s ", connection));
+    try {
+      Preconditions.checkState(connection == null || !connection.isOpen(), "connection is already open");
+      connection = factory.newConnection();
+      channel = connection.createChannel();
+      if (LOG.isInfoEnabled()) {
+        LOG.info(format("Open connection %s ", connection));
+      }
+      declareQueueOrExchange(channel, exchange, type, routingKey);
+    } catch (Exception e) {
+      if (LOG.isErrorEnabled()) {
+        LOG.error(format("Error occurred when opening connection %s ", connection), e);
+      }
+      throw new IOException(e);
     }
-    declareQueueOrExchange(channel, exchange, type, routingKey);
   }
 
   @Override
   public void close() throws IOException {
-    channel.close();
-    connection.close();
-    if (LOG.isDebugEnabled()) {
-      LOG.debug(format("Close connection %s ", connection));
+    try {
+      if (channel != null && channel.isOpen()) {
+        channel.close();
+        if (LOG.isInfoEnabled()) {
+          LOG.info(format("Close channel %s ", channel));
+        }
+      }
+      if (connection != null && connection.isOpen()) {
+        connection.close();
+        if (LOG.isInfoEnabled()) {
+          LOG.info(format("Close connection %s ", connection));
+        }
+      }
+    } catch (Exception e) {
+      if (LOG.isErrorEnabled()) {
+        LOG.error(format("Error occurred when closing connection %s ", connection), e);
+      }
+      throw new IOException(e);
     }
   }
 
   @Override
   public void publish(byte[] msg) throws IOException {
-    channel.basicPublish(exchange, routingKey, PERSISTENT_TEXT_PLAIN, msg);
-    if (LOG.isDebugEnabled()) {
-      LOG.debug(format("Publish event %s", msg));
+    try {
+      channel.basicPublish(exchange, routingKey, PERSISTENT_TEXT_PLAIN, msg);
+      if (LOG.isDebugEnabled()) {
+        LOG.debug(format("Publish event %s", msg));
+      }
+    } catch (Exception e) {
+      if (LOG.isErrorEnabled()) {
+        LOG.error(format("Error occurred when publishing event %s ", msg), e);
+      }
+      throw new IOException(e);
     }
   }
 
   private void declareQueueOrExchange(Channel channel, String exchange, String type, String routingKey)
       throws IOException {
     // Just declare queue if exchange is null or blank
-    if (Strings.isNullOrEmpty(exchange)) {
+    if (isNullOrEmpty(exchange)) {
       channel.queueDeclare(routingKey, true, false, false, null); // Durable message in queue
     } else {
       channel.exchangeDeclare(exchange, type, true, false, false, null); // Durable message in exchange
     }
+  }
+
+
+  private void checkPreconditions(String address, String username, String password, String vhost, String exchange,
+                                  String routingKey) {
+    Preconditions.checkArgument(!isNullOrEmpty(address),
+                                "Invalid configuration: 'address' must be non-null or empty.");
+    Preconditions.checkArgument(!isNullOrEmpty(username),
+                                "Invalid configuration: 'username' must be non-null or empty.");
+    Preconditions.checkArgument(!isNullOrEmpty(password),
+                                "Invalid configuration: 'password' must be non-null or empty.");
+    Preconditions.checkArgument(!isNullOrEmpty(vhost),
+                                "Invalid configuration: 'vhost' must be non-null or empty.");
+    Preconditions.checkArgument(exchange != null, "Invalid configuration: 'exchange' must be non-null.");
+    Preconditions.checkArgument(routingKey != null, "Invalid configuration: 'routingKey' must be non-null.");
   }
 }

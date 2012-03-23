@@ -5,24 +5,22 @@ import com.cloudera.flume.core.EventSink;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
 
 import static org.junit.Assert.assertNotNull;
 
-@RunWith(MockitoJUnitRunner.class)
-public class RabbitMQSinkBuilderTest {
+public class RabbitMQFailoverSinkBuilderTest {
 
   @Mock
   private Context context;
 
-  private RabbitMQSinkBuilder builder;
+  private RabbitMQFailoverSinkBuilder builder;
 
   @Before
   public void setUp() throws Exception {
-    builder = new RabbitMQSinkBuilder();
+    builder = new RabbitMQFailoverSinkBuilder();
   }
+
 
   @Test(expected = IllegalArgumentException.class)
   public void buildWithoutArgs() throws Exception {
@@ -67,7 +65,7 @@ public class RabbitMQSinkBuilderTest {
   @Test(expected = IllegalArgumentException.class)
   public void buildWithFiveArgs() throws Exception {
     // When
-    builder.build(context, new String[]{"arg1", "arg2", "arg3","arg4", "arg5"});
+    builder.build(context, new String[]{"arg1", "arg2", "arg3", "arg4", "arg5"});
 
     // Then IllegalArgumentException is thrown
   }
@@ -75,7 +73,7 @@ public class RabbitMQSinkBuilderTest {
   @Test(expected = IllegalArgumentException.class)
   public void buildWithSixArgs() throws Exception {
     // When
-    builder.build(context, new String[]{"arg1", "arg2", "arg3","arg4", "arg5", "arg6"});
+    builder.build(context, new String[]{"arg1", "arg2", "arg3", "arg4", "arg5", "arg6"});
 
     // Then IllegalArgumentException is thrown
   }
@@ -104,10 +102,33 @@ public class RabbitMQSinkBuilderTest {
   @Test
   public void buildWithValidOutputFormat() throws Exception {
     // When
-    EventSink sink = builder.build(context, new String[]{"arg1", "arg2", "arg3", "arg4", "arg5", "arg6", "arg7", "json"});
+    EventSink
+        sink =
+        builder.build(context, new String[]{"arg1", "arg2", "arg3", "arg4", "arg5", "arg6", "arg7", "json"});
 
     // Then
     assertNotNull(sink);
   }
 
+  @Test
+  public void buildWithMultipleAddresses() throws Exception {
+    // When
+    EventSink
+        sink =
+        builder.build(context, new String[]{"host1,host2,host3", "arg2", "arg3", "arg4", "arg5", "arg6", "arg7", "json"});
+
+    // Then
+    assertNotNull(sink);
+  }
+  @Test
+  public void buildWithMultipleAddressesWithPorts() throws Exception {
+    // When
+    EventSink
+        sink =
+        builder.build(context, new String[]{"host1:1111,host2:1112,host3:1113", "arg2", "arg3", "arg4", "arg5", "arg6", "arg7", "json"});
+
+    // Then
+    assertNotNull(sink);
+  }
 }
+

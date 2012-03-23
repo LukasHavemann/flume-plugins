@@ -49,6 +49,10 @@ public class RabbitMQSink extends EventSink.Base {
     return new RabbitMQSinkBuilder();
   }
 
+  private static SinkFactory.SinkBuilder failover() {
+    return new RabbitMQFailoverSinkBuilder();
+  }
+
   /**
    * This is a special function used by the SourceFactory to pull in this class as a RabbitMQSink decorator.
    *
@@ -57,6 +61,7 @@ public class RabbitMQSink extends EventSink.Base {
   public static List<Pair<String, SinkFactory.SinkBuilder>> getSinkBuilders() {
     List<Pair<String, SinkFactory.SinkBuilder>> builders = new ArrayList<Pair<String, SinkFactory.SinkBuilder>>();
     builders.add(new Pair<String, SinkFactory.SinkBuilder>("rabbit", builder()));
+    builders.add(new Pair<String, SinkFactory.SinkBuilder>("rabbitFailover", failover()));
     return builders;
   }
 

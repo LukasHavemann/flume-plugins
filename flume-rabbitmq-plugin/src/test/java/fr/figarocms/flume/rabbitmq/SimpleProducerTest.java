@@ -8,50 +8,82 @@ public class SimpleProducerTest {
 
   private SimpleProducer producer;
 
-  @Test(expected = NullPointerException.class)
-  public void uriNull() throws Exception {
+  @Test(expected = IllegalArgumentException.class)
+  public void addressNull() throws Exception {
     // When
-    new SimpleProducer(null, null, null, null);
+    new SimpleProducer(null, null, null, null, null, null, null);
   }
 
-  @Test(expected = NullPointerException.class)
+  @Test(expected = IllegalArgumentException.class)
+  public void addressEmpty() throws Exception {
+    // When
+    new SimpleProducer("", null, null, null, null, null, null);
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void usernameNull() throws Exception {
+    // When
+    new SimpleProducer("address", null, null, null, null, null, null);
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void usernameEmpty() throws Exception {
+    // When
+    new SimpleProducer("address", null, null, null, null, null, null);
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void passwordNull() throws Exception {
+    // When
+    new SimpleProducer("address", "username", null, null, null, null, null);
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void passwordEmpty() throws Exception {
+    // When
+    new SimpleProducer("address", "username", "", null, null, null, null);
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void vhostNull() throws Exception {
+    // When
+    new SimpleProducer("address", "username", "password", null, null, null, null);
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void vhostEmpty() throws Exception {
+    // When
+    new SimpleProducer("address", "username", "password", null, null, null, null);
+  }
+
+  @Test(expected = IllegalArgumentException.class)
   public void exchangeNull() throws Exception {
     // When
-    new SimpleProducer("", null, null, null);
+    new SimpleProducer("address", "username", "password", "vhost", null, null, null);
   }
 
-  @Test(expected = NullPointerException.class)
+  @Test(expected = IllegalArgumentException.class)
   public void typeNull() throws Exception {
     // When
-    new SimpleProducer("", "", null, null);
+    new SimpleProducer("address", "username", "password", "vhost", "exchange", null, null);
   }
 
-  @Test(expected = NullPointerException.class)
+  @Test(expected = IllegalArgumentException.class)
   public void routingKeyNull() throws Exception {
     // When
-    new SimpleProducer("", "", "", null);
-  }
-
-  @Test(expected = IllegalArgumentException.class)
-  public void notAnUri() throws Exception {
-    // When
-    new SimpleProducer("", "", "", "");
-  }
-
-  @Test(expected = IllegalArgumentException.class)
-  public void notAnAMQPUri() throws Exception {
-    // When
-    new SimpleProducer("http://test", "", "", "");
+    new SimpleProducer("address", "username", "password", "vhost", "exchange", "type", null);
   }
 
   @Test
-  public void anAMQPUri() throws Exception {
+  public void nominal() throws Exception {
     // When
-    producer = new SimpleProducer("amqp://test", "", "", "");
+    final
+    SimpleProducer
+        simpleProducer =
+        new SimpleProducer("address", "username", "password", "vhost", "exchange", "type", "routing_key");
 
     // Then
-    assertNotNull(producer);
+    assertNotNull(simpleProducer);
   }
-
 
 }

@@ -21,21 +21,21 @@ public class RabbitMQSinkBuilder extends SinkFactory.SinkBuilder {
 
   @Override
   public EventSink build(Context context, String... argv) {
-    Preconditions.checkArgument(argv.length >= 4 && argv.length <= 5,
-                                "usage: rabbit(uri, exchange, exchange_type, routing_key[, format])");
+    Preconditions.checkArgument(argv.length >= 7 && argv.length <= 8,
+                                "usage: rabbit(address, username, password, vhost, exchange, exchange_type, routing_key[, format])");
 
     // Create Producer
-    Producer producer = new SimpleProducer(argv[0], argv[1], argv[2], argv[3]);
+    Producer producer = new SimpleProducer(argv[0], argv[1], argv[2], argv[3],argv[4], argv[5], argv[6]);
 
     // Define output format
     OutputFormat fmt = DebugOutputFormat.builder().create();
-    if (argv.length == 5) {
+    if (argv.length == 8) {
       try {
-        fmt = FlumeBuilder.createFormat(FormatFactory.get(), argv[4]);
+        fmt = FlumeBuilder.createFormat(FormatFactory.get(), argv[7]);
       } catch (FlumeSpecException e) {
-        LOG.error("Bad output format name " + argv[4], e);
+        LOG.error("Bad output format name " + argv[7], e);
         throw new IllegalArgumentException("Bad output format name "
-                                           + argv[4], e);
+                                           + argv[7], e);
       }
     }
 
