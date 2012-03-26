@@ -1,31 +1,16 @@
-body:
-  type: string
+mapping:
+  attributes:
+    - name: 'geoip.longitude'
+      type: float
 
-priority:
-  type: string
+    - name: 'geoip.latitude'
+      type: float
 
-attributes:
-  - name: attribute1
-    type: integer
 
-  - name: attribute2
-    type: long
-
-  - name: attribute3
-    type: float
-
-  - name: attribute4
-    type: double
-
-  - name: attribute5
-    type: boolean
-
-  - name: attribute6
-    type: boolean
-
-  - name: attribute6
-    type: date
-    format: YYYY-MM-dd
-
-  - pattern: 'attribute*'
-    type: string
+format:
+  host: '%{haproxy.host}'
+  longitude: '%{geoip.long}'
+  latitude: '%{geoip.lat}'
+  city: '%{geoip.city}'
+  countryName: '%{geoip.countryName}'
+  countryCode: '%{geoip.countryCode}'
