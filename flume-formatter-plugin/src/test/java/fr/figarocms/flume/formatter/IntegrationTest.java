@@ -4,11 +4,17 @@ import com.cloudera.flume.core.Event;
 import com.cloudera.flume.core.EventImpl;
 import com.cloudera.util.Clock;
 import org.codehaus.jackson.map.ObjectMapper;
+import org.codehaus.jackson.type.TypeReference;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
 import java.nio.ByteBuffer;
+import java.util.HashMap;
+
+import static org.junit.Assert.assertEquals;
 
 public class IntegrationTest {
 
@@ -23,8 +29,30 @@ public class IntegrationTest {
   }
 
   @Test
-  public void integrationTest() throws Exception {
+  public void nominal() throws Exception {
     //Given
+    Event event = nominalEvent();
+	InputStream expected = ClassLoader.getSystemClassLoader().getResourceAsStream("expected.json");
+
+    // When
+    ByteArrayOutputStream stream = new ByteArrayOutputStream();
+    formatter.format(stream, event);
+
+    // Then
+	ByteArrayInputStream actual = new ByteArrayInputStream(stream.toByteArray());
+	final byte[] bytes = stream.toByteArray();
+    System.out.print(new String(bytes));
+
+	assertEquals(
+			mapper.readValue(expected, new TypeReference<HashMap<String, Object>>(){}),
+			mapper.readValue(actual, new TypeReference<HashMap<String, Object>>(){})
+	);
+  }
+
+  @Test
+  public void withoutConfigFile() throws Exception {
+    //Given
+	formatter = new JsonObjectFormatter(null);
     Event event = nominalEvent();
 
     // When
@@ -36,10 +64,11 @@ public class IntegrationTest {
     System.out.print(new String(bytes));
   }
 
+
   public static Event nominalEvent() {
     Event
         event =
-        new EventImpl("this is a test".getBytes(), Clock.unixTime(), Event.Priority.INFO, Clock.nanos(), "server1");
+        new EventImpl("this is a test".getBytes(), 123L, Event.Priority.INFO, 456L, "server1");
 
     // String attribute
     event.set("attr_string", "this is a string".getBytes());

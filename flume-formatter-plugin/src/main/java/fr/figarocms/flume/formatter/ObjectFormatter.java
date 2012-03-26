@@ -3,8 +3,6 @@ package fr.figarocms.flume.formatter;
 import com.cloudera.flume.core.Event;
 import com.cloudera.flume.handlers.text.output.AbstractOutputFormat;
 import fr.figarocms.flume.formatter.config.Formatter;
-import org.dozer.config.BeanContainer;
-import org.dozer.util.DozerClassLoader;
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.error.YAMLException;
 
