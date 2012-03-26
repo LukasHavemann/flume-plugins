@@ -54,10 +54,11 @@ rabbitFailover(addresses, username, password, vhost, exchange, exchange_type, ro
 Assume the following declaration :
 
 ```
-rabbit("amqp://userName:password@hostName:portNumber/virtualHost", "sample", "topic", "*.foo.*", "json");
+rabbit("host:port", "userName", "password", "/", "sample", "topic", "*.foo.*", "json", "application/json");
 ```
 
-This sink declaration will send events as json events to the topic "sample" with routing key "*.foo.*".
+This sink declaration will send events with the json format to the topic "sample" with routing key "*.foo.*".
+The media type used to send messages is "application/json".
 
 
 ### Download :
