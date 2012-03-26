@@ -28,12 +28,13 @@ public class EventFilterBuilder extends SinkFactory.SinkDecoBuilder {
   @Override
   public EventFilter build(Context context, String... argv) {
     Preconditions.checkArgument(argv.length == 1, "usage: filter(filename)");
-    URL resource = this.getClass().getResource(argv[0]);
+    ClassLoader loader = ClassLoader.getSystemClassLoader();
+    URL url = loader.getResource(argv[0]);
 
     // Load configuration file
     try {
       Yaml yaml = new Yaml();
-      File configuration = new File(resource == null ? argv[0] : resource.getFile());
+      File configuration = new File(url == null ? argv[0] : url.getFile());
       EventPredicateBuilder builder = yaml.loadAs(new FileInputStream(configuration), EventPredicateBuilder.class);
       Preconditions.checkArgument(builder != null, "File '" + argv[0] + "' is empty");
       return new EventFilter(null, builder.build());

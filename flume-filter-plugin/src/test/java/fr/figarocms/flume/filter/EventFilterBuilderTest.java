@@ -25,18 +25,19 @@ public class EventFilterBuilderTest {
 
   @Test(expected = IllegalArgumentException.class)
   public void emptyYmlFile() {
-    builder.build(context, "/empty_file.yml");
+    builder.build(context, "empty_file.yml");
   }
 
   @Test
   public void nominalClasspathFile() {
-    EventFilter filter = builder.build(mock(Context.class), "/nominal.yml");
+    EventFilter filter = builder.build(mock(Context.class), "nominal.yml");
     assertNotNull(filter);
   }
 
   @Test
   public void nominalAbsoluteFile() {
-    String file = getClass().getResource("/nominal.yml").getFile();
+	ClassLoader classLoader = ClassLoader.getSystemClassLoader();
+	String file = classLoader.getResource("nominal.yml").getFile();
     EventFilter filter = builder.build(mock(Context.class), file);
     assertNotNull(filter);
   }
@@ -48,12 +49,12 @@ public class EventFilterBuilderTest {
 
   @Test(expected = IllegalArgumentException.class)
   public void firstArgumentMustBeAnExistingFile() {
-    builder.build(mock(Context.class), "/unknown.yml");
+    builder.build(mock(Context.class), "unknown.yml");
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void firstArgumentMustBeAValidYmlFile() {
-    builder.build(mock(Context.class), "/not_yml.yml");
+    builder.build(mock(Context.class), "not_yml.yml");
   }
 
 }

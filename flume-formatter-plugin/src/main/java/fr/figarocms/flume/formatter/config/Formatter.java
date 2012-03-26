@@ -1,14 +1,10 @@
 package fr.figarocms.flume.formatter.config;
 
-import com.google.common.collect.Maps;
-
 import com.cloudera.flume.core.Event;
-
-import org.apache.hadoop.thirdparty.guava.common.base.Preconditions;
+import com.google.common.collect.Maps;
+import fr.figarocms.flume.formatter.mapping.Mapping;
 
 import java.util.Map;
-
-import fr.figarocms.flume.formatter.mapping.Mapping;
 
 public class Formatter {
 

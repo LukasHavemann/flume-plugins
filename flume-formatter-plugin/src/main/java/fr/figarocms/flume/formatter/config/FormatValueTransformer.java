@@ -2,11 +2,10 @@ package fr.figarocms.flume.formatter.config;
 
 import com.google.common.base.Function;
 
+import javax.annotation.Nullable;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import javax.annotation.Nullable;
 
 public class FormatValueTransformer implements Function<Object, Object> {
 

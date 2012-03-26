@@ -22,23 +22,16 @@ public class GeoIPExtractorBuilder extends SinkFactory.SinkDecoBuilder {
   @Override
   public GeoIPExtractor<EventSink> build(Context context, String... argv) {
     Preconditions.checkArgument(argv.length >= 1 && argv.length <= 3, "usage: geoip(filename, field, prefix)");
+    ClassLoader loader = ClassLoader.getSystemClassLoader();
+    URL url = loader.getResource(argv[0]);
 
-    URL resource = this.getClass().getResource(argv[0]);
-    File file;
-
-    // Resolve file from classpath
-    if (resource == null) {
-      file = new File(argv[0]);
-      if (!file.exists()) {
-        throw new IllegalArgumentException("File '" + argv[0] + "' does not exist");
-      }
-      // Resolve file from absolute path
-    } else {
-      file = new File(resource.getFile());
+    File database = new File(url == null ? argv[0] : url.getFile());
+    if (!database.exists()) {
+       throw new IllegalArgumentException("File '" + argv[0] + "' does not exist");
     }
 
     try {
-      LookupService lookupService = new LookupService(file, LookupService.GEOIP_MEMORY_CACHE);
+      LookupService lookupService = new LookupService(database, LookupService.GEOIP_MEMORY_CACHE);
       GeoIPExtractor<EventSink> g = new GeoIPExtractor<EventSink>(null, lookupService);
       switch (argv.length) {
         case 2: //if field name is passed in parameter use it.
@@ -53,7 +46,7 @@ public class GeoIPExtractorBuilder extends SinkFactory.SinkDecoBuilder {
       }
       return g;
     } catch (IOException e) {
-      throw new IllegalArgumentException("File '" + file.getAbsolutePath() + "' is not readable");
+      throw new IllegalArgumentException("File '" + database.getAbsolutePath() + "' is not readable");
     }
   }
 

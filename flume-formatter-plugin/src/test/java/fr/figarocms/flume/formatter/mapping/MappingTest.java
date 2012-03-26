@@ -2,7 +2,6 @@ package fr.figarocms.flume.formatter.mapping;
 
 import com.cloudera.flume.core.Event;
 import com.cloudera.flume.core.EventImpl;
-
 import org.junit.Before;
 import org.junit.Test;
 
@@ -11,9 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 import static com.google.common.collect.Lists.newArrayList;
-import static com.google.common.collect.Maps.newHashMap;
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.mock;
 
 public class MappingTest {
 

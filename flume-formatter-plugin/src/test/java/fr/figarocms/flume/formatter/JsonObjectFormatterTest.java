@@ -2,9 +2,6 @@ package fr.figarocms.flume.formatter;
 
 import com.cloudera.flume.handlers.text.FormatFactory;
 import com.cloudera.flume.handlers.text.output.OutputFormat;
-
-
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -31,7 +28,7 @@ public class JsonObjectFormatterTest {
   @Test
   public void buildWithOneArg() throws Exception {
     // When
-    OutputFormat format = builder.build("/formatter.yml");
+    OutputFormat format = builder.build("formatter.yml");
     // Then
     assertNotNull(format);
   }
@@ -39,7 +36,7 @@ public class JsonObjectFormatterTest {
   @Test(expected = IllegalArgumentException.class)
   public void buildWithMoreThanOneArgs() throws Exception {
     // When
-    OutputFormat format = builder.build("/formatter.yml", "other", "args");
+    OutputFormat format = builder.build("formatter.yml", "other", "args");
 
     // Then IllegalArgumentException is thrown
 

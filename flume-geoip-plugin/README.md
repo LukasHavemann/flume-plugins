@@ -34,7 +34,7 @@ Assuming there is a attribute "ip" in event with value "213.52.50.8" for example
 The following Flume configuration :
 
 ```
-geoip("/city.dat", "ip")
+geoip("city.dat", "ip")
 ```
 
 should add for example the following attributes to the event :

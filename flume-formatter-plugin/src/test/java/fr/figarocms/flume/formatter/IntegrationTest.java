@@ -3,7 +3,6 @@ package fr.figarocms.flume.formatter;
 import com.cloudera.flume.core.Event;
 import com.cloudera.flume.core.EventImpl;
 import com.cloudera.util.Clock;
-
 import org.codehaus.jackson.map.ObjectMapper;
 import org.junit.Before;
 import org.junit.Test;
@@ -19,7 +18,7 @@ public class IntegrationTest {
 
   @Before
   public void setUp() throws Exception {
-    formatter = new JsonObjectFormatter("/formatter.yml");
+    formatter = new JsonObjectFormatter("formatter.yml");
     mapper = new ObjectMapper();
   }
 

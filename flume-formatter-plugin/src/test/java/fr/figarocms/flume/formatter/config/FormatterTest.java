@@ -2,18 +2,15 @@ package fr.figarocms.flume.formatter.config;
 
 import com.cloudera.flume.core.Event;
 import com.cloudera.flume.core.EventImpl;
-
+import fr.figarocms.flume.formatter.mapping.Mapping;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import java.nio.ByteBuffer;
 import java.util.HashMap;
 import java.util.Map;
-
-import fr.figarocms.flume.formatter.mapping.Mapping;
 
 import static com.google.common.collect.Maps.newHashMap;
 import static org.junit.Assert.assertEquals;

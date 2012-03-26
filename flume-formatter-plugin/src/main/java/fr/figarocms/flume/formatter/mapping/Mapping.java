@@ -1,12 +1,10 @@
 package fr.figarocms.flume.formatter.mapping;
 
+import com.cloudera.flume.core.Event;
 import com.google.common.base.Function;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
 
-import com.cloudera.flume.core.Event;
-
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -21,17 +19,23 @@ public class Mapping {
     this.attributes = attributes;
   }
 
+  // Required by Yaml Parser
+  public List<AttributeMapping> getAttributes() {
+    return attributes;
+  }
+
   // ~ Methods --------------------------------------------------------------------------------------------------------
 
   public Map<String, Object> map(Event e) {
     Map<String, Object> map = newHashMap();
+	// Map Event properties
     map.put("body", convert(e.getBody(), "string"));
     map.put("timestamp", e.getTimestamp());
     map.put("host", e.getHost());
     map.put("priority", e.getPriority());
     map.put("nanos", e.getNanos());
 
-    // Map attributes
+    // Map Event attributes
     map.putAll(mapAttributes(e, attributes));
     return map;
   }
@@ -50,7 +54,7 @@ public class Mapping {
       });
     }
 
-    // Convert attributes     
+    // Convert attributes
     Map<String, byte[]> attrs = e.getAttrs();
     for (Map.Entry<String, byte[]> s : attrs.entrySet()) {
       if (mappedAttributes.containsKey(s.getKey())) {
@@ -58,15 +62,12 @@ public class Mapping {
         // Convert attribute
         map.put(s.getKey(), convert(s.getValue(), mapping.getType()));
       } else {
-        // By default attribute are converted to string
+        // By default attribute is converted to string
         map.put(s.getKey(), convert(s.getValue(), "string"));
       }
     }
     return map;
   }
 
-  // Required by Yaml Parser
-  public List<AttributeMapping> getAttributes() {
-    return attributes;
-  }
+
 }
