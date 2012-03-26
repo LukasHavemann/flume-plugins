@@ -20,7 +20,7 @@ public class Mapping {
     private Pattern syslogpattern;
 
     /**
-     * Mapping initialyse list of fields entry
+     * Mapping initialise list of fields entry
      */
     public Mapping() {
         this.list = new ArrayList<MappingEntry>();
