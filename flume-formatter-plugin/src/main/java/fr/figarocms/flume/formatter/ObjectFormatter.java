@@ -18,25 +18,26 @@ import fr.figarocms.flume.formatter.config.Formatter;
 
 import static com.google.common.base.Preconditions.checkArgument;
 
-//TODO add logs
 public abstract class ObjectFormatter extends AbstractOutputFormat {
 
   private Formatter formatter;
 
   public ObjectFormatter(String filename) {
-    Preconditions.checkArgument(filename != null, "No formatter configuration file specified");
-    URL resource = this.getClass().getResource(filename);
+    if (filename == null) {
+      formatter = new Formatter();
+    } else {
+      URL resource = this.getClass().getResource(filename);
 
-    // Load configuration file
-    try {
-      Yaml yaml = new Yaml();
-      File file = new File(resource == null ? filename : resource.getFile());
-      formatter = yaml.loadAs(new FileInputStream(file), Formatter.class);
-      checkArgument(formatter != null, "File '" + filename + "' is empty");
-    } catch (FileNotFoundException f) {
-      throw new IllegalArgumentException("File '" + filename + "' does not exist", f);
-    } catch (YAMLException y) {
-      throw new IllegalArgumentException("File '" + filename + "' is not a valid yml", y);
+      // Load configuration file
+      try {
+        Yaml yaml = new Yaml();
+        File file = new File(resource == null ? filename : resource.getFile());
+        formatter = yaml.loadAs(new FileInputStream(file), Formatter.class);
+      } catch (FileNotFoundException f) {
+        throw new IllegalArgumentException("File '" + filename + "' does not exist", f);
+      } catch (YAMLException y) {
+        throw new IllegalArgumentException("File '" + filename + "' is not a valid yml", y);
+      }
     }
   }
 

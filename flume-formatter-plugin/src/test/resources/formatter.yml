@@ -1,16 +1,31 @@
 mapping:
   attributes:
-    - name: 'geoip.longitude'
+    - name: 'attr_string'
+      type: string
+
+    - name: 'attr_integer'
+      type: integer
+
+    - name: 'attr_long'
+      type: long
+
+    - name: 'attr_float'
       type: float
 
-    - name: 'geoip.latitude'
-      type: float
-
+    - name: 'attr_double'
+      type: double
 
 format:
-  host: '%{haproxy.host}'
-  longitude: '%{geoip.long}'
-  latitude: '%{geoip.lat}'
-  city: '%{geoip.city}'
-  countryName: '%{geoip.countryName}'
-  countryCode: '%{geoip.countryCode}'
+  body: '%{body}'
+  timestamp: '%{timestamp}'
+  host: '%{host}'
+  priority: '%{priority}'
+  nanos: '%{nanos}'
+  attr_1: '%{attr_string}'
+  attr_2: '%{attr_integer}'
+  attr_3: '%{attr_long}'
+  attr_4: '%{attr_float}'
+  attr_5: '%{attr_double}'
+  attr_6: '%{attr_unknown}'
+  attr_7: 3.2
+  attr_8: null

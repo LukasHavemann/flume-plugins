@@ -1,5 +1,6 @@
 package fr.figarocms.flume.formatter;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -11,10 +12,13 @@ public class ObjectFormatterTest {
 
   private ObjectFormatter formatter;
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void noFileSpecified() throws Exception {
     // When
-    formatter = new ForTestFormatter(null);
+    formatter = new ForTestFormatter();
+
+    // Then
+    assertNotNull(formatter);
   }
 
   @Test
@@ -54,6 +58,10 @@ public class ObjectFormatterTest {
 
     private ForTestFormatter(String filename) {
       super(filename);
+    }
+
+    private ForTestFormatter() {
+      super(null);
     }
 
     @Override

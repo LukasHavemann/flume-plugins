@@ -1,6 +1,5 @@
 package fr.figarocms.flume.formatter.mapping.converter;
 
-import org.joda.time.DateTime;
 import org.junit.Test;
 
 import java.nio.ByteBuffer;
@@ -13,37 +12,33 @@ public class ConvertersTest {
   @Test
   public void convertString() throws Exception {
     // Given / When
-    String value = (String) Converters.convert("test".getBytes(), "string", null);
+    String value = (String) Converters.convert("test".getBytes(), "string");
 
     // Then
     assertEquals("test", value);
   }
 
   @Test
-  public void convertDate() throws Exception {
+  public void convertFloat() throws Exception {
     // Given
-    DateTime expected = new DateTime();
-    byte[] data = new byte[Long.SIZE];
+    Object source = new Integer(13213);
+    byte[] data = new byte[Integer.SIZE];
     ByteBuffer buffer = ByteBuffer.wrap(data);
-    buffer.putLong(expected.getMillis());
+    buffer.putInt((Integer)source);
+    Integer value = (Integer) Converters.convert(data, "integer");
 
-    // When
-    String value = (String) Converters.convert(data, "date", null);
-
-    assertEquals(expected.toString(), value);
+    // Then
+    assertEquals(source, value);
   }
 
   @Test
-  public void convertDateWithFormat() throws Exception {
-    // Given
-    DateTime expected = new DateTime();
-    byte[] data = new byte[Long.SIZE];
-    ByteBuffer buffer = ByteBuffer.wrap(data);
-    buffer.putLong(expected.getMillis());
+  public void unknownConverter() throws Exception {
+    // Given / When
+    String value = (String) Converters.convert("test".getBytes(), "test");
 
-    // When
-    String value = (String) Converters.convert(data, "date", "dd/MM/yyyy");
-
-    assertEquals(expected.toString("dd/MM/yyyy"), value);
+    // Then
+    assertEquals("test", value);
   }
+
+
 }

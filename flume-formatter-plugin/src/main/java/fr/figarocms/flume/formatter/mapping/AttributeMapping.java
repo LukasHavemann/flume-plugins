@@ -4,7 +4,6 @@ public class AttributeMapping {
 
   private String name;
   private String type;
-  private String format;
 
   public void setName(String name) {
     this.name = name;
@@ -14,9 +13,6 @@ public class AttributeMapping {
     this.type = type;
   }
 
-  public void setFormat(String format) {
-    this.format = format;
-  }
 
   public String getName() {
     return name;
@@ -26,7 +22,4 @@ public class AttributeMapping {
     return type;
   }
 
-  public String getFormat() {
-    return format;
-  }
 }

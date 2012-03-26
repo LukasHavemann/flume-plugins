@@ -4,6 +4,8 @@ import com.google.common.collect.Maps;
 
 import com.cloudera.flume.core.Event;
 
+import org.apache.hadoop.thirdparty.guava.common.base.Preconditions;
+
 import java.util.Map;
 
 import fr.figarocms.flume.formatter.mapping.Mapping;
@@ -21,9 +23,15 @@ public class Formatter {
     this.format = format;
   }
 
-  public Object format(Event e) {
+  public Map<String, Object> format(Event e) {
+    if (mapping == null) {
+      mapping = new Mapping();
+    }
+
     Map<String, Object> objectMap = mapping.map(e);
-    Maps.EntryTransformer transformer = new FormatEntryTransformer(objectMap);
-    return Maps.transformEntries(format, transformer);
+    if(format == null){
+      return objectMap;
+    }
+    return Maps.transformValues(format, new FormatValueTransformer(objectMap));
   }
 }

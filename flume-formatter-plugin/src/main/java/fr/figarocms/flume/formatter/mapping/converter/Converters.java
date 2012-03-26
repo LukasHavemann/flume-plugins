@@ -2,8 +2,6 @@ package fr.figarocms.flume.formatter.mapping.converter;
 
 import com.google.common.collect.ImmutableMap;
 
-import org.joda.time.DateTime;
-
 
 public class Converters {
 
@@ -18,16 +16,11 @@ public class Converters {
           .put("long", new LongConverter())
           .put("float", new FloatConverter())
           .put("double", new DoubleConverter())
-          .put("date", new DateTimeConverter())
           .build();
 
 
-  public static Object convert(byte[] bytes, String type, String pattern) {
+  public static Object convert(byte[] bytes, String type) {
     Converter converter = CONVERTERS.get(type);
-    if ("date".equals(type)) {
-      DateTime date = (DateTime) converter.convert(bytes);
-      return date.toString(pattern);
-    }
     if (converter == null) {
       converter = CONVERTERS.get("string"); // By default convert to string
     }

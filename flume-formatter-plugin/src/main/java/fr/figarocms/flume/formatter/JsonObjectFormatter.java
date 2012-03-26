@@ -30,8 +30,8 @@ public class JsonObjectFormatter extends ObjectFormatter {
 
       @Override
       public OutputFormat build(String... args) {
-        Preconditions.checkArgument(args.length == 1, "usage: json_object(<filename>)");
-        OutputFormat format = new JsonObjectFormatter(args[0]);
+        Preconditions.checkArgument(args.length >= 0 && args.length <= 1, "usage: json_object([filename])");
+        OutputFormat format = new JsonObjectFormatter(args.length == 1 ? args[0]: null);
         format.setBuilder(this);
         return format;
       }

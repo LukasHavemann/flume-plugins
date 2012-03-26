@@ -1,18 +1,17 @@
 package fr.figarocms.flume.formatter.mapping;
 
+import com.google.common.base.Function;
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Maps;
+
 import com.cloudera.flume.core.Event;
 
-import org.apache.hadoop.thirdparty.guava.common.base.Function;
-import org.apache.hadoop.thirdparty.guava.common.collect.ImmutableMap;
-import org.apache.hadoop.thirdparty.guava.common.collect.Maps;
-
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import javax.annotation.Nullable;
-
+import static com.google.common.collect.Maps.newHashMap;
 import static fr.figarocms.flume.formatter.mapping.converter.Converters.convert;
-import static org.apache.hadoop.thirdparty.guava.common.collect.Maps.newHashMap;
 
 public class Mapping {
 
@@ -22,25 +21,52 @@ public class Mapping {
     this.attributes = attributes;
   }
 
-  // TODO add test
+  // ~ Methods --------------------------------------------------------------------------------------------------------
+
   public Map<String, Object> map(Event e) {
-    ImmutableMap<String, AttributeMapping>
-        mappedAttributes =
-        Maps.uniqueIndex(attributes, new Function<AttributeMapping, String>() {
-          @Override
-          public String apply(@Nullable AttributeMapping mapping) {
-            return mapping.getName();
-          }
-        });
     Map<String, Object> map = newHashMap();
+    map.put("body", convert(e.getBody(), "string"));
+    map.put("timestamp", e.getTimestamp());
+    map.put("host", e.getHost());
+    map.put("priority", e.getPriority());
+    map.put("nanos", e.getNanos());
+
+    // Map attributes
+    map.putAll(mapAttributes(e, attributes));
+    return map;
+  }
+
+  protected Map<String, Object> mapAttributes(Event e, List<AttributeMapping> attributes) {
+    ImmutableMap<String, AttributeMapping> mappedAttributes = ImmutableMap.of();
+    Map<String, Object> map = newHashMap();
+
+    // Create an index base on attribute name
+    if (attributes != null) {
+      mappedAttributes = Maps.uniqueIndex(attributes, new Function<AttributeMapping, String>() {
+        @Override
+        public String apply(AttributeMapping mapping) {
+          return mapping.getName();
+        }
+      });
+    }
+
+    // Convert attributes     
     Map<String, byte[]> attrs = e.getAttrs();
     for (Map.Entry<String, byte[]> s : attrs.entrySet()) {
-      if (mappedAttributes.containsKey(s)) {
-        AttributeMapping mapping = mappedAttributes.get(s);
-        map.put(s.getKey(), convert(s.getValue(), mapping.getType(), mapping.getFormat()));
+      if (mappedAttributes.containsKey(s.getKey())) {
+        AttributeMapping mapping = mappedAttributes.get(s.getKey());
+        // Convert attribute
+        map.put(s.getKey(), convert(s.getValue(), mapping.getType()));
+      } else {
+        // By default attribute are converted to string
+        map.put(s.getKey(), convert(s.getValue(), "string"));
       }
-      map.put(s.getKey(), convert(s.getValue(), "string", null));
     }
     return map;
+  }
+
+  // Required by Yaml Parser
+  public List<AttributeMapping> getAttributes() {
+    return attributes;
   }
 }
