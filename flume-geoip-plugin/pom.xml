@@ -11,7 +11,7 @@
     <packaging>jar</packaging>
     <name>Flume GeoIP Plugin</name>
     <description>
-		Event Sink Decorator which augments Flume Event with IP localisation based on MaxMind GeoIP
+        Event Sink Decorator which augments Flume Event with IP localisation based on MaxMind GeoIP
     </description>
     <url>https://github.com/figarocms/flume-plugins/flume-geoip-plugin</url>
 

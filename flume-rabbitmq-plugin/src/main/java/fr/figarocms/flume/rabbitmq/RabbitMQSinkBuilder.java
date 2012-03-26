@@ -25,7 +25,7 @@ public class RabbitMQSinkBuilder extends SinkFactory.SinkBuilder {
                                 "usage: rabbit(address, username, password, vhost, exchange, exchange_type, routing_key[, format, media_type])");
 
     // Create Producer
-    Producer producer = new SimpleProducer(argv[0], argv[1], argv[2], argv[3],argv[4], argv[5], argv[6]);
+    Producer producer = new SimpleProducer(argv[0], argv[1], argv[2], argv[3], argv[4], argv[5], argv[6]);
     String mediaType = null;
     // Define message media type
     OutputFormat fmt = DebugOutputFormat.builder().create();

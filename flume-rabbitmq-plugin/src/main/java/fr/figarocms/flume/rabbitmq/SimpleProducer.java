@@ -110,12 +110,12 @@ public class SimpleProducer implements Producer {
 
   private AMQP.BasicProperties persistentMediaTypeProperties(String mediaType) {
     return new AMQP.BasicProperties((isNullOrEmpty(mediaType) ? "application/octet-stream" : mediaType),
-                          null,
-                          null,
-                          2,
-                          0, null, null, null,
-                          null, null, null, null,
-                          null, null);
+                                    null,
+                                    null,
+                                    2,
+                                    0, null, null, null,
+                                    null, null, null, null,
+                                    null, null);
   }
 
   private void declareQueueOrExchange(Channel channel, String exchange, String type, String routingKey)

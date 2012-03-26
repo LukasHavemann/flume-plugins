@@ -27,7 +27,7 @@ public class RabbitMQFailoverSinkBuilder extends SinkFactory.SinkBuilder {
   @Override
   public EventSink build(Context context, String... argv) {
     Preconditions.checkArgument(argv.length >= 7 && argv.length <= 9,
-                                  "usage: rabbitFailover(address, username, password, vhost, exchange, exchange_type, routing_key[, format, media_type])");
+                                "usage: rabbitFailover(address, username, password, vhost, exchange, exchange_type, routing_key[, format, media_type])");
     Preconditions.checkArgument(!isNullOrEmpty(argv[0]),
                                 "Invalid configuration: 'addresses' must be non-null or empty.");
     String mediaType = null;

@@ -9,25 +9,25 @@ import static org.junit.Assert.assertEquals;
 
 public class LongConverterTest {
 
-	private LongConverter converter;
+  private LongConverter converter;
 
-	@Before
-	public void setUp() throws Exception {
-		converter = new LongConverter();
-	}
+  @Before
+  public void setUp() throws Exception {
+    converter = new LongConverter();
+  }
 
-	@Test
-	public void convert() throws Exception {
-		// Given
-		Long expected = new Long("3456784554649878979");
-		byte[] data = new byte[Long.SIZE];
-		ByteBuffer buffer = ByteBuffer.wrap(data);
-		buffer.putLong(expected);
+  @Test
+  public void convert() throws Exception {
+    // Given
+    Long expected = new Long("3456784554649878979");
+    byte[] data = new byte[Long.SIZE];
+    ByteBuffer buffer = ByteBuffer.wrap(data);
+    buffer.putLong(expected);
 
-		// When
-		Long value = converter.convert(data);
+    // When
+    Long value = converter.convert(data);
 
-		// Then
-		assertEquals(expected, value);
-	}
+    // Then
+    assertEquals(expected, value);
+  }
 }

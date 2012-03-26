@@ -9,13 +9,14 @@
 // Copyright (c) 2010 Cloudera, Inc.  All rights reserved.
 package fr.figarocms.flume.hbase;
 
-import java.io.File;
+import com.cloudera.util.FileUtil;
 
 import org.apache.hadoop.hbase.HBaseClusterTestCase;
 
-import com.cloudera.util.FileUtil;
+import java.io.File;
 
 public class HBaseTestEnv extends HBaseClusterTestCase {
+
   private File hbaseTestDir;
 
   @Override

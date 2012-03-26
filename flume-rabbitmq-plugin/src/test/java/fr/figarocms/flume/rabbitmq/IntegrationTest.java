@@ -31,7 +31,12 @@ public class IntegrationTest {
     builder = new RabbitMQFailoverSinkBuilder();
 
     // When
-    final EventSink sink = builder.build(context, "iamqp01.int.adencf.local,iamqp02.int.adencf.local","guest", "guest", "/", "eventTracker","topic","#","json" );
+    final
+    EventSink
+        sink =
+        builder
+            .build(context, "iamqp01.int.adencf.local,iamqp02.int.adencf.local", "guest", "guest", "/", "eventTracker",
+                   "topic", "#", "json");
     sink.open();
     sink.append(event);
     sink.close();

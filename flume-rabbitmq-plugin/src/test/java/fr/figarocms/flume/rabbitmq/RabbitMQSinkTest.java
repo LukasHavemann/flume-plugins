@@ -27,7 +27,7 @@ public class RabbitMQSinkTest {
   private Producer producer;
   @Mock
   private OutputFormat format;
-  private String mediaType ="application/json";
+  private String mediaType = "application/json";
 
   @Before
   public void setUp() throws Exception {

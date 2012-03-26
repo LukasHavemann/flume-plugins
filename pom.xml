@@ -7,9 +7,9 @@
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>Flume Plugins</name>
-	<description>
-		Collection of Flume Plugins developed and used at Figaro Classifieds
-	</description>
+    <description>
+        Collection of Flume Plugins developed and used at Figaro Classifieds
+    </description>
     <url>https://github.com/figarocms/flume-plugins</url>
 
     <scm>
@@ -65,7 +65,7 @@
             <scope>provided</scope>
         </dependency>
 
-		<!-- Test -->
+        <!-- Test -->
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
@@ -160,12 +160,12 @@
     </distributionManagement>
 
     <modules>
-		<module>flume-filter-plugin</module>
-		<module>flume-formatter-plugin</module>
-		<module>flume-geoip-plugin</module>
-		<module>flume-haproxy-plugin</module>
-		<module>flume-rabbitmq-plugin</module>
-		<module>flume-hbase-plugin</module>
+        <module>flume-filter-plugin</module>
+        <module>flume-formatter-plugin</module>
+        <module>flume-geoip-plugin</module>
+        <module>flume-haproxy-plugin</module>
+        <module>flume-rabbitmq-plugin</module>
+        <module>flume-hbase-plugin</module>
     </modules>
 
 </project>

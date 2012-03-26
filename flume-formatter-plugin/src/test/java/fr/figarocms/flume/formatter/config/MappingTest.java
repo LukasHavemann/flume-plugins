@@ -7,6 +7,5 @@ public class MappingTest {
   @Test
   public void tes() throws Exception {
 
-
   }
 }

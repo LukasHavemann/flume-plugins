@@ -22,7 +22,9 @@ import com.cloudera.flume.core.Event.Priority;
 import com.cloudera.flume.core.EventImpl;
 import com.cloudera.flume.core.EventSink;
 import com.cloudera.util.Clock;
+
 import junit.framework.Assert;
+
 import org.apache.hadoop.hbase.HBaseTestCase;
 import org.apache.hadoop.hbase.HColumnDescriptor;
 import org.apache.hadoop.hbase.HTableDescriptor;
@@ -45,6 +47,7 @@ import java.util.AbstractMap;
  */
 @Ignore
 public class TestAttr2HBaseSink {
+
   private static HBaseTestEnv hbaseEnv;
 
   @BeforeClass
@@ -63,8 +66,6 @@ public class TestAttr2HBaseSink {
 
   /**
    * Write events to a sink directly, verify by scanning HBase table.
-   * 
-   * @throws InterruptedException
    */
   @Test
   public void testSink() throws IOException, InterruptedException {
@@ -86,23 +87,23 @@ public class TestAttr2HBaseSink {
 
     // explicit constructor rather than builder - we want to control the conf
     EventSink snk = new Attr2HBaseEventSink(tableName, tableSysFamily,
-        writeBody, tableBody, tableBodyFamily, "2hb_", 0, true, hbaseEnv.conf);
+                                            writeBody, tableBody, tableBodyFamily, "2hb_", 0, true, hbaseEnv.conf);
     snk.open();
     try {
       Event e1 = new EventImpl("message0".getBytes(), Clock.unixTime(),
-          Priority.INFO, 0, "localhost");
+                               Priority.INFO, 0, "localhost");
       e1.set("2hb_", Bytes.toBytes("row-key0"));
       e1.set("2hb_family1:column1", Bytes.toBytes("value0"));
       e1.set("2hb_family2:column2", Bytes.toBytes("value_0"));
       e1.set("other", Bytes.toBytes("val0"));
       Event e2 = new EventImpl("message1".getBytes(), Clock.unixTime(),
-          Priority.INFO, 1, "localhost");
+                               Priority.INFO, 1, "localhost");
       e2.set("2hb_", Bytes.toBytes("row-key1"));
       e2.set("2hb_family1:column1", Bytes.toBytes("value1"));
       e2.set("2hb_family2:column2", Bytes.toBytes("value_1"));
       e2.set("other", Bytes.toBytes("val1"));
       Event e3 = new EventImpl("message2".getBytes(), Clock.unixTime(),
-          Priority.INFO, 2, "localhost");
+                               Priority.INFO, 2, "localhost");
       e3.set("2hb_", Bytes.toBytes("row-key2"));
       e3.set("2hb_family1:column1", Bytes.toBytes("value2"));
       e3.set("2hb_family2:column2", Bytes.toBytes("value_2"));
@@ -122,33 +123,33 @@ public class TestAttr2HBaseSink {
         System.out.println("result " + r);
 
         byte[] host = r.getValue(Bytes.toBytes(tableSysFamily),
-            Bytes.toBytes("host"));
+                                 Bytes.toBytes("host"));
         Assert.assertEquals("Matching host", "localhost", Bytes.toString(host));
         byte[] priority = r.getValue(Bytes.toBytes(tableSysFamily),
-            Bytes.toBytes("priority"));
+                                     Bytes.toBytes("priority"));
         Assert.assertEquals("Matching priority", "INFO",
-            Bytes.toString(priority));
+                            Bytes.toString(priority));
         byte[] body = r.getValue(Bytes.toBytes(tableSysFamily),
-            Bytes.toBytes("event"));
+                                 Bytes.toBytes("event"));
         Assert.assertEquals("Matching body", "message" + i,
-            Bytes.toString(body));
+                            Bytes.toString(body));
         // 4 here means: host, timestamp, priority and body
         Assert.assertEquals("Matching values added", 4,
-            r.getFamilyMap(Bytes.toBytes(tableSysFamily)).size());
+                            r.getFamilyMap(Bytes.toBytes(tableSysFamily)).size());
 
         byte[] fam1value = r.getValue(Bytes.toBytes(tableFamily1),
-            Bytes.toBytes("column1"));
+                                      Bytes.toBytes("column1"));
         Assert.assertEquals("Matching value", "value" + i,
-            Bytes.toString(fam1value));
+                            Bytes.toString(fam1value));
         Assert.assertEquals("Matching values added", 1,
-            r.getFamilyMap(Bytes.toBytes(tableFamily1)).size());
+                            r.getFamilyMap(Bytes.toBytes(tableFamily1)).size());
 
         byte[] fam2value = r.getValue(Bytes.toBytes(tableFamily2),
-            Bytes.toBytes("column2"));
+                                      Bytes.toBytes("column2"));
         Assert.assertEquals("Matching value", "value_" + i,
-            Bytes.toString(fam2value));
+                            Bytes.toString(fam2value));
         Assert.assertEquals("Matching values added", 1,
-            r.getFamilyMap(Bytes.toBytes(tableFamily2)).size());
+                            r.getFamilyMap(Bytes.toBytes(tableFamily2)).size());
 
       }
     } finally {
@@ -162,10 +163,10 @@ public class TestAttr2HBaseSink {
     final String tableBodyFamily = "event";
     final Boolean writeBody = true;
     Attr2HBaseEventSink snk = new Attr2HBaseEventSink("tableName", "",
-        writeBody, tableBody, tableBodyFamily, "2hb_", 0, true, null);
+                                                      writeBody, tableBody, tableBodyFamily, "2hb_", 0, true, null);
 
     Event e = new EventImpl("message".getBytes(), Clock.unixTime(),
-        Priority.INFO, 0, "localhost");
+                            Priority.INFO, 0, "localhost");
     e.set("2hb_", Bytes.toBytes("rowKey"));
     e.set("2hb_family1:column1", Bytes.toBytes("value1"));
     e.set("2hb_family2:column2", Bytes.toBytes("value2"));
@@ -173,21 +174,21 @@ public class TestAttr2HBaseSink {
 
     Put put = snk.createPut(e);
     Assert.assertEquals("Matching row key", "rowKey",
-        Bytes.toString(put.getRow()));
+                        Bytes.toString(put.getRow()));
     Assert.assertEquals("Matching column families added", 2, put.getFamilyMap()
         .size());
     Assert.assertEquals(
         "Matching value",
         "value1",
         Bytes.toString(put
-            .get(Bytes.toBytes("family1"), Bytes.toBytes("column1")).get(0)
-            .getValue()));
+                           .get(Bytes.toBytes("family1"), Bytes.toBytes("column1")).get(0)
+                           .getValue()));
     Assert.assertEquals(
         "Matching value",
         "value2",
         Bytes.toString(put
-            .get(Bytes.toBytes("family2"), Bytes.toBytes("column2")).get(0)
-            .getValue()));
+                           .get(Bytes.toBytes("family2"), Bytes.toBytes("column2")).get(0)
+                           .getValue()));
   }
 
   @Test
@@ -196,18 +197,18 @@ public class TestAttr2HBaseSink {
     final String tableBodyFamily = "";
     final Boolean writeBody = false;
     Attr2HBaseEventSink snk = new Attr2HBaseEventSink("tableName", "sysFam",
-        writeBody, tableBody, tableBodyFamily, "2hb_", 0, true, null);
+                                                      writeBody, tableBody, tableBodyFamily, "2hb_", 0, true, null);
 
     Event e = new EventImpl("message".getBytes(), Clock.unixTime(),
-        Priority.INFO, 0, "localhost");
+                            Priority.INFO, 0, "localhost");
     e.set("2hb_", Bytes.toBytes("rowKey"));
 
     Put put = snk.createPut(e);
     // 3 here means: host, timestamp, priority (body is excluded)
     Assert.assertEquals("Matching values added", 3,
-        put.getFamilyMap().get(Bytes.toBytes("sysFam")).size());
+                        put.getFamilyMap().get(Bytes.toBytes("sysFam")).size());
     Assert.assertEquals("Body shouldn't be written", 0,
-        put.get(Bytes.toBytes("sysFam"), Bytes.toBytes("event")).size());
+                        put.get(Bytes.toBytes("sysFam"), Bytes.toBytes("event")).size());
   }
 
   @Test
@@ -216,15 +217,15 @@ public class TestAttr2HBaseSink {
     final String tableBodyFamily = "event";
     final Boolean writeBody = true;
     Attr2HBaseEventSink snk = new Attr2HBaseEventSink("tableName", "sysFam",
-        writeBody, tableBody, tableBodyFamily, "2hb_", 0, true, null);
+                                                      writeBody, tableBody, tableBodyFamily, "2hb_", 0, true, null);
 
     Event e = new EventImpl("message".getBytes(), Clock.unixTime(),
-        Priority.INFO, 0, "localhost");
+                            Priority.INFO, 0, "localhost");
     e.set("other", Bytes.toBytes("val0"));
 
     Put put = snk.createPut(e);
     Assert.assertNull("No put should be created when row key data is absent",
-        put);
+                      put);
   }
 
   @Test
@@ -233,7 +234,7 @@ public class TestAttr2HBaseSink {
     final String tableBodyFamily = "event";
     final Boolean writeBody = true;
     Attr2HBaseEventSink snk = new Attr2HBaseEventSink("tableName", "sysFam",
-        writeBody, tableBody, tableBodyFamily, "2hb_", 0, true, null);
+                                                      writeBody, tableBody, tableBodyFamily, "2hb_", 0, true, null);
     byte[] foo = Bytes.toBytes("foo");
 
     Put put = new Put(foo);
@@ -258,7 +259,7 @@ public class TestAttr2HBaseSink {
     final String tableBodyFamily = "event";
     final Boolean writeBody = true;
     Attr2HBaseEventSink snk = new Attr2HBaseEventSink("tableName", "",
-        writeBody, tableBody, tableBodyFamily, "2hb_", 0, true, null);
+                                                      writeBody, tableBody, tableBodyFamily, "2hb_", 0, true, null);
     byte[] foo = Bytes.toBytes("foo");
 
     Put put = new Put(foo);
@@ -278,7 +279,7 @@ public class TestAttr2HBaseSink {
   }
 
   private void assertHasSingleKeyValue(Put put, String fam, String col,
-      byte[] val) {
+                                       byte[] val) {
     Assert.assertEquals("Matching added values", 1, put.getFamilyMap().size());
     Assert.assertTrue(
         "Matching value",
@@ -291,7 +292,7 @@ public class TestAttr2HBaseSink {
   }
 
   private AbstractMap.SimpleEntry<String, byte[]> createAttr(String key,
-      byte[] val) {
+                                                             byte[] val) {
     return new AbstractMap.SimpleEntry<String, byte[]>(key, val);
   }
 
@@ -301,7 +302,7 @@ public class TestAttr2HBaseSink {
     final String tableBodyFamily = "event";
     final Boolean writeBody = true;
     Attr2HBaseEventSink snk = new Attr2HBaseEventSink("tableName", "sysFam",
-        writeBody, tableBody, tableBodyFamily, "", 0, true, null);
+                                                      writeBody, tableBody, tableBodyFamily, "", 0, true, null);
     byte[] foo = Bytes.toBytes("foo");
 
     Put put = new Put(foo);

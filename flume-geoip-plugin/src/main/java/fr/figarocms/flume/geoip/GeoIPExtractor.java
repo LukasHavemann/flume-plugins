@@ -17,127 +17,124 @@
  */
 package fr.figarocms.flume.geoip;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
 import com.cloudera.flume.conf.SinkFactory.SinkDecoBuilder;
 import com.cloudera.flume.core.Event;
 import com.cloudera.flume.core.EventSink;
 import com.cloudera.flume.core.EventSinkDecorator;
 import com.cloudera.util.Pair;
-
-import fr.figarocms.flume.geoip.utils.Bytes;
-
 import com.maxmind.geoip.Location;
 import com.maxmind.geoip.LookupService;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import fr.figarocms.flume.geoip.utils.Bytes;
+
 /**
  * @param <S>
  */
 public class GeoIPExtractor<S extends EventSink> extends EventSinkDecorator<S> {
-    protected static Logger LOG = LoggerFactory.getLogger(GeoIPExtractor.class);
 
-    private LookupService lookupService;
+  protected static Logger LOG = LoggerFactory.getLogger(GeoIPExtractor.class);
 
-    private String attributeName = "ip"; //event Field where to read IP address
-    private String dstPrefix = "geoip"; //prefix for Fields of geoloc information in event
+  private LookupService lookupService;
 
-    /**
-     * @param s : event Sink from Flume
-     * @param lookupService : GeoIP database interface
-     */
-    public GeoIPExtractor(S s, LookupService lookupService) {
-        super(s);
+  private String attributeName = "ip"; //event Field where to read IP address
+  private String dstPrefix = "geoip"; //prefix for Fields of geoloc information in event
 
-        this.lookupService = lookupService;
-    }
+  /**
+   * @param s             : event Sink from Flume
+   * @param lookupService : GeoIP database interface
+   */
+  public GeoIPExtractor(S s, LookupService lookupService) {
+    super(s);
 
-    /**
-     * @param attributeName :  field where is stored IP address
-     */
-    public void setAttributeName(String attributeName) {
-        this.attributeName = attributeName;
-    }
+    this.lookupService = lookupService;
+  }
 
-    /**
-     * @param dstPrefix : field prefix for geotag attributes
-     */
-    public void setDstPrefix(String dstPrefix) {
-        this.dstPrefix = dstPrefix;
-    }
+  /**
+   * @param attributeName :  field where is stored IP address
+   */
+  public void setAttributeName(String attributeName) {
+    this.attributeName = attributeName;
+  }
 
-    /**
-     * @return name of the field containing IP address
-     */
-    public String getAttributeName() {
-        return this.attributeName;
-    }
+  /**
+   * @param dstPrefix : field prefix for geotag attributes
+   */
+  public void setDstPrefix(String dstPrefix) {
+    this.dstPrefix = dstPrefix;
+  }
 
-    /**
-     * @return prefix for the flieds containing geotag attributes add to event
-     */
-    public String getDstPrefix() {
-        return this.dstPrefix;
-    }
+  /**
+   * @return name of the field containing IP address
+   */
+  public String getAttributeName() {
+    return this.attributeName;
+  }
 
-    /**
-     * @param e : the event Object
-     * @throws IOException
-     * @throws InterruptedException
-     */
-    @Override
-    public void append(Event e) throws IOException, InterruptedException {
-        if (e.getAttrs().containsKey(this.attributeName)) {
-            Location l = lookupService.getLocation(new String(e.get(this.attributeName)));
-            if (l != null) {
-                if (l.city != null) {
-                    e.set(this.dstPrefix+".city", l.city.getBytes());
-                }
-                if (l.countryName != null) {
-                    e.set(this.dstPrefix+".countryName", l.countryName.getBytes());
-                }
-                if (l.countryCode != null) {
-                    e.set(this.dstPrefix+".countryCode", l.countryCode.getBytes());
-                }
-                if (l.longitude != 0) {
-                    e.set(this.dstPrefix+".longitude", Bytes.toBytes(l.longitude));
-                }
-                if (l.latitude != 0) {
-                    e.set(this.dstPrefix+".latitude", Bytes.toBytes(l.latitude));
-                }
-            } else {
-                LOG.warn("Unable to parse IP in '" + this.attributeName + "'");
-            }
-        } else {
-            LOG.warn("no Field '" + this.attributeName + "' in event");
+  /**
+   * @return prefix for the flieds containing geotag attributes add to event
+   */
+  public String getDstPrefix() {
+    return this.dstPrefix;
+  }
+
+  /**
+   * @param e : the event Object
+   */
+  @Override
+  public void append(Event e) throws IOException, InterruptedException {
+    if (e.getAttrs().containsKey(this.attributeName)) {
+      Location l = lookupService.getLocation(new String(e.get(this.attributeName)));
+      if (l != null) {
+        if (l.city != null) {
+          e.set(this.dstPrefix + ".city", l.city.getBytes());
         }
-
-
-        super.append(e);
+        if (l.countryName != null) {
+          e.set(this.dstPrefix + ".countryName", l.countryName.getBytes());
+        }
+        if (l.countryCode != null) {
+          e.set(this.dstPrefix + ".countryCode", l.countryCode.getBytes());
+        }
+        if (l.longitude != 0) {
+          e.set(this.dstPrefix + ".longitude", Bytes.toBytes(l.longitude));
+        }
+        if (l.latitude != 0) {
+          e.set(this.dstPrefix + ".latitude", Bytes.toBytes(l.latitude));
+        }
+      } else {
+        LOG.warn("Unable to parse IP in '" + this.attributeName + "'");
+      }
+    } else {
+      LOG.warn("no Field '" + this.attributeName + "' in event");
     }
 
-    /**
-     * @return  a Sink decorator for GeoIPExtractor
-     */
-    public static SinkDecoBuilder builder() {
-        return new GeoIPExtractorBuilder();
-    }
+    super.append(e);
+  }
 
-    /**
-     * This is a special function used by the SourceFactory to pull in this class
-     * as a flume-geoip-plugin decorator.
-     * @return a list of GeoIPExtractorBuilder
-     */
-    public static List<Pair<String, SinkDecoBuilder>> getDecoratorBuilders() {
-        List<Pair<String, SinkDecoBuilder>> builders =
-                new ArrayList<Pair<String, SinkDecoBuilder>>();
-        builders.add(new Pair<String, SinkDecoBuilder>("geoip",
-                builder()));
-        return builders;
-    }
+  /**
+   * @return a Sink decorator for GeoIPExtractor
+   */
+  public static SinkDecoBuilder builder() {
+    return new GeoIPExtractorBuilder();
+  }
+
+  /**
+   * This is a special function used by the SourceFactory to pull in this class as a flume-geoip-plugin decorator.
+   *
+   * @return a list of GeoIPExtractorBuilder
+   */
+  public static List<Pair<String, SinkDecoBuilder>> getDecoratorBuilders() {
+    List<Pair<String, SinkDecoBuilder>> builders =
+        new ArrayList<Pair<String, SinkDecoBuilder>>();
+    builders.add(new Pair<String, SinkDecoBuilder>("geoip",
+                                                   builder()));
+    return builders;
+  }
 
 }

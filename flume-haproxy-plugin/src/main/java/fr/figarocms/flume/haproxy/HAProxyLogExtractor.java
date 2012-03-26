@@ -17,15 +17,15 @@
  */
 package fr.figarocms.flume.haproxy;
 
+import com.google.common.base.Preconditions;
+
 import com.cloudera.flume.conf.Context;
 import com.cloudera.flume.conf.SinkFactory.SinkDecoBuilder;
 import com.cloudera.flume.core.Event;
 import com.cloudera.flume.core.EventSink;
 import com.cloudera.flume.core.EventSinkDecorator;
 import com.cloudera.util.Pair;
-import com.google.common.base.Preconditions;
-import fr.figarocms.flume.haproxy.processor.DateProcessor;
-import fr.figarocms.flume.haproxy.processor.HeaderProcessor;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,82 +33,85 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.figarocms.flume.haproxy.processor.DateProcessor;
+import fr.figarocms.flume.haproxy.processor.HeaderProcessor;
+
 
 public class HAProxyLogExtractor<S extends EventSink> extends EventSinkDecorator<S> {
 
-    static final Logger LOG = LoggerFactory.getLogger(HAProxyLogExtractor.class);
+  static final Logger LOG = LoggerFactory.getLogger(HAProxyLogExtractor.class);
 
-    private Mapping mapping;
+  private Mapping mapping;
 
-    /**
-     * @param s : SinkDecorator context from Flume
-     */
-    public HAProxyLogExtractor(S s) {
+  /**
+   * @param s : SinkDecorator context from Flume
+   */
+  public HAProxyLogExtractor(S s) {
 
-        super(s);
+    super(s);
 
-        this.mapping = new Mapping();
+    this.mapping = new Mapping();
 
-        this.mapping.addEntry("clientIp")
-                .addEntry("clientPort")
-                .addEntry("timestamp", new DateProcessor())
-                .addEntry("frontend")
-                .addEntry("backend")
-                .addEntry("host")
-                .addEntry("times")
-                .addEntry("statusCode")
-                .addEntry("byteRead")
-                .addEntry("capturedRequestCookie")
-                .addEntry("capturedResponseCookie")
-                .addEntry("terminationState")
-                .addEntry("connStates")
-                .addEntry("queuesStates")
-                .addEntry("capturedRequestHeaders", new HeaderProcessor())
-                .addEntry("capturedResponseHeaders", new HeaderProcessor())
-                .addEntry("verb")
-                .addEntry("uri")
-                .addEntry("version");
+    this.mapping.addEntry("clientIp")
+        .addEntry("clientPort")
+        .addEntry("timestamp", new DateProcessor())
+        .addEntry("frontend")
+        .addEntry("backend")
+        .addEntry("host")
+        .addEntry("times")
+        .addEntry("statusCode")
+        .addEntry("byteRead")
+        .addEntry("capturedRequestCookie")
+        .addEntry("capturedResponseCookie")
+        .addEntry("terminationState")
+        .addEntry("connStates")
+        .addEntry("queuesStates")
+        .addEntry("capturedRequestHeaders", new HeaderProcessor())
+        .addEntry("capturedResponseHeaders", new HeaderProcessor())
+        .addEntry("verb")
+        .addEntry("uri")
+        .addEntry("version");
 
+  }
+
+  @Override
+  public void append(Event e) throws IOException, InterruptedException {
+
+    this.mapping.process(e);
+
+    if (LOG.isDebugEnabled()) {
+      LOG.debug("unable to match the given event's body {}", e.toString());
     }
-
-    @Override
-    public void append(Event e) throws IOException, InterruptedException {
-
-        this.mapping.process(e);
-
-        if (LOG.isDebugEnabled()) {
-            LOG.debug("unable to match the given event's body {}", e.toString());
-        }
-        super.append(e);
-    }
+    super.append(e);
+  }
 
 
-    /**
-     * Retrieve the SinkDecoBuilder the hbase
-     *
-     * @return SinkDecoBuilder
-     */
-    public static SinkDecoBuilder builder() {
-        return new SinkDecoBuilder() {
-            // construct a new parameterized flume
-            @Override
-            public EventSinkDecorator<EventSink> build(Context context, String... argv) {
-                Preconditions.checkArgument(argv.length == 0, "usage: haproxy");
-                return new HAProxyLogExtractor<EventSink>(null);
-            }
-        };
-    }
+  /**
+   * Retrieve the SinkDecoBuilder the hbase
+   *
+   * @return SinkDecoBuilder
+   */
+  public static SinkDecoBuilder builder() {
+    return new SinkDecoBuilder() {
+      // construct a new parameterized flume
+      @Override
+      public EventSinkDecorator<EventSink> build(Context context, String... argv) {
+        Preconditions.checkArgument(argv.length == 0, "usage: haproxy");
+        return new HAProxyLogExtractor<EventSink>(null);
+      }
+    };
+  }
 
-    /**
-     * Used by flume.flume to register this hbase
-     *
-     * @return a list of pair name => deco builder
-     */
-    public static List<Pair<String, SinkDecoBuilder>> getDecoratorBuilders() {
-        List<Pair<String, SinkDecoBuilder>> builders =
-                new ArrayList<Pair<String, SinkDecoBuilder>>();
-        builders.add(new Pair<String, SinkDecoBuilder>("haproxy",
-                builder()));
-        return builders;
-    }
+  /**
+   * Used by flume.flume to register this hbase
+   *
+   * @return a list of pair name => deco builder
+   */
+  public static List<Pair<String, SinkDecoBuilder>> getDecoratorBuilders() {
+    List<Pair<String, SinkDecoBuilder>> builders =
+        new ArrayList<Pair<String, SinkDecoBuilder>>();
+    builders.add(new Pair<String, SinkDecoBuilder>("haproxy",
+                                                   builder()));
+    return builders;
+  }
 }

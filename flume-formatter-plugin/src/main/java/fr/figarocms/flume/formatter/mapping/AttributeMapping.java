@@ -2,31 +2,31 @@ package fr.figarocms.flume.formatter.mapping;
 
 public class AttributeMapping {
 
-	private String name;
-	private String type;
-	private String format;
+  private String name;
+  private String type;
+  private String format;
 
-	public void setName(String name) {
-		this.name = name;
-	}
+  public void setName(String name) {
+    this.name = name;
+  }
 
-	public void setType(String type) {
-		this.type = type;
-	}
+  public void setType(String type) {
+    this.type = type;
+  }
 
-	public void setFormat(String format) {
-		this.format = format;
-	}
+  public void setFormat(String format) {
+    this.format = format;
+  }
 
-	public String getName() {
-		return name;
-	}
+  public String getName() {
+    return name;
+  }
 
-	public String getType() {
-		return type;
-	}
+  public String getType() {
+    return type;
+  }
 
-	public String getFormat() {
-		return format;
-	}
+  public String getFormat() {
+    return format;
+  }
 }

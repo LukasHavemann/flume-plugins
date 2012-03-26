@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>fr.figarocms.flume</groupId>
@@ -9,7 +10,7 @@
     <packaging>jar</packaging>
     <name>Flume Filter Plugin</name>
     <description>
-		Event Sink Decorator which filter Flume Event
+        Event Sink Decorator which filter Flume Event
     </description>
     <url>https://github.com/figarocms/flume-plugins/flume-filter-plugin</url>
 

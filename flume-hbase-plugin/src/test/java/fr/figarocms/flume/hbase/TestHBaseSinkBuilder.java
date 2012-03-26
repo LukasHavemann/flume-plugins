@@ -17,7 +17,11 @@
  */
 package fr.figarocms.flume.hbase;
 
-import static org.junit.Assert.assertEquals;
+import com.cloudera.flume.conf.FlumeBuilder;
+import com.cloudera.flume.conf.FlumeSpecException;
+import com.cloudera.flume.conf.LogicalNodeContext;
+import com.cloudera.flume.conf.SinkFactory.SinkBuilder;
+import com.cloudera.flume.conf.SinkFactoryImpl;
 
 import org.junit.BeforeClass;
 import org.junit.Ignore;
@@ -25,18 +29,16 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.cloudera.flume.conf.FlumeBuilder;
-import com.cloudera.flume.conf.FlumeSpecException;
-import com.cloudera.flume.conf.LogicalNodeContext;
-import com.cloudera.flume.conf.SinkFactory.SinkBuilder;
-import com.cloudera.flume.conf.SinkFactoryImpl;
 import fr.figarocms.flume.hbase.HBaseSink.QualifierSpec;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  * Test the hbase sink writes events to a table/family properly
  */
 @Ignore
 public class TestHBaseSinkBuilder {
+
   public static Logger LOG = LoggerFactory
       .getLogger(TestHBaseSinkBuilder.class);
 
@@ -54,8 +56,8 @@ public class TestHBaseSinkBuilder {
   public void testBuilder() {
     SinkBuilder esb = HBaseSink.builder();
     HBaseSink snk = (HBaseSink) esb.build(LogicalNodeContext.testingContext(),
-        "table", "%{rowkey}", "cf1", "col1", "%{attr1}", "cf2", "col2",
-        "%{attr2}");
+                                          "table", "%{rowkey}", "cf1", "col1", "%{attr1}", "cf2", "col2",
+                                          "%{attr2}");
     assertEquals(snk.tableName, "table");
     assertEquals(snk.rowkey, "%{rowkey}");
 
@@ -74,34 +76,34 @@ public class TestHBaseSinkBuilder {
   public void testFailNotTriples() {
     SinkBuilder esb = HBaseSink.builder();
     HBaseSink snk = (HBaseSink) esb.build(LogicalNodeContext.testingContext(),
-        "table", "%{rowkey}", "cf1", "col1", "%{attr1}", "cf2", "col2");
+                                          "table", "%{rowkey}", "cf1", "col1", "%{attr1}", "cf2", "col2");
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void testFailNotEnough() {
     SinkBuilder esb = HBaseSink.builder();
     HBaseSink snk = (HBaseSink) esb.build(LogicalNodeContext.testingContext(),
-        "table");
+                                          "table");
   }
 
   @Test
   public void testKwArgs() throws FlumeSpecException {
     HBaseSink s = (HBaseSink) FlumeBuilder.buildSink(
         LogicalNodeContext.testingContext(), "hbase(\"table\","
-            + "\"%{rowkey}\"," + "\"cf1\", \"col1\", \"%{attr1}\","
-            + "writeBufferSize=10000, writeToWal=true)");
+                                             + "\"%{rowkey}\"," + "\"cf1\", \"col1\", \"%{attr1}\","
+                                             + "writeBufferSize=10000, writeToWal=true)");
     assertEquals(s.writeBufferSize, 10000);
     assertEquals(s.writeToWal, true);
 
     s = (HBaseSink) FlumeBuilder.buildSink(LogicalNodeContext.testingContext(),
-        "hbase(\"table\"," + "\"%{rowkey}\","
-            + "\"cf1\", \"col1\", \"%{attr1}\"," + "writeToWal=false)");
+                                           "hbase(\"table\"," + "\"%{rowkey}\","
+                                           + "\"cf1\", \"col1\", \"%{attr1}\"," + "writeToWal=false)");
     assertEquals(s.writeBufferSize, 0);
     assertEquals(s.writeToWal, false);
 
     s = (HBaseSink) FlumeBuilder.buildSink(LogicalNodeContext.testingContext(),
-        "hbase(\"table\"," + "\"%{rowkey}\","
-            + "\"cf1\", \"col1\", \"%{attr1}\"," + "writeBufferSize=10000)");
+                                           "hbase(\"table\"," + "\"%{rowkey}\","
+                                           + "\"cf1\", \"col1\", \"%{attr1}\"," + "writeBufferSize=10000)");
     assertEquals(s.writeBufferSize, 10000);
     assertEquals(s.writeToWal, false);
   }

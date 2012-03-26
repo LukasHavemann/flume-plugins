@@ -9,27 +9,27 @@ import java.nio.ByteBuffer;
 import static org.junit.Assert.assertEquals;
 
 public class FloatConverterTest {
-	
-	private FloatConverter converter;
 
-	@Before
-	public void setUp() throws Exception {
-		converter = new FloatConverter();
-	}
+  private FloatConverter converter;
 
-	@Test
-	public void convert() throws Exception {
-		// Given
-		Float expected = new Float("2.14434344676876");
-		byte[] data = new byte[Float.SIZE];
-		ByteBuffer buffer = ByteBuffer.wrap(data);
-		buffer.putFloat(expected);
+  @Before
+  public void setUp() throws Exception {
+    converter = new FloatConverter();
+  }
 
-		// When
-		Float value = converter.convert(data);
+  @Test
+  public void convert() throws Exception {
+    // Given
+    Float expected = new Float("2.14434344676876");
+    byte[] data = new byte[Float.SIZE];
+    ByteBuffer buffer = ByteBuffer.wrap(data);
+    buffer.putFloat(expected);
 
-		// Then
-		assertEquals(expected, value);
-	}
+    // When
+    Float value = converter.convert(data);
+
+    // Then
+    assertEquals(expected, value);
+  }
 
 }
