@@ -125,5 +125,5 @@ The Json Object Formatter should format the event like that :
 
 ### Download :
 
-You can download jar at https://oss.sonatype.org/ searching for "flume-filter-plugin" :-)
+You can download jar at https://oss.sonatype.org/ searching for "flume-formatter-plugin" :-)
 
