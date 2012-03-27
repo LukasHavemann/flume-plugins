@@ -27,7 +27,7 @@ public class RabbitMQSinkBuilderTest {
   @Test(expected = IllegalArgumentException.class)
   public void buildWithoutArgs() throws Exception {
     // When
-    builder.build(context, new String[]{});
+    builder.create(context, new String[]{});
 
     // Then IllegalArgumentException is thrown
   }
@@ -35,7 +35,7 @@ public class RabbitMQSinkBuilderTest {
   @Test(expected = IllegalArgumentException.class)
   public void buildWithOneArgument() throws Exception {
     // When
-    builder.build(context, new String[]{"arg1"});
+    builder.create(context, new String[]{"arg1"});
 
     // Then IllegalArgumentException is thrown
   }
@@ -43,7 +43,7 @@ public class RabbitMQSinkBuilderTest {
   @Test(expected = IllegalArgumentException.class)
   public void buildWithTwoArgs() throws Exception {
     // When
-    builder.build(context, new String[]{"arg1", "arg2"});
+    builder.create(context, new String[]{"arg1", "arg2"});
 
     // Then IllegalArgumentException is thrown
   }
@@ -51,7 +51,7 @@ public class RabbitMQSinkBuilderTest {
   @Test(expected = IllegalArgumentException.class)
   public void buildWithThreeArgs() throws Exception {
     // When
-    builder.build(context, new String[]{"arg1", "arg2", "arg3"});
+    builder.create(context, new String[]{"arg1", "arg2", "arg3"});
 
     // Then IllegalArgumentException is thrown
   }
@@ -59,7 +59,7 @@ public class RabbitMQSinkBuilderTest {
   @Test(expected = IllegalArgumentException.class)
   public void buildWithFourArgs() throws Exception {
     // When
-    builder.build(context, new String[]{"arg1", "arg2", "arg3", "arg4"});
+    builder.create(context, new String[]{"arg1", "arg2", "arg3", "arg4"});
 
     // Then IllegalArgumentException is thrown
   }
@@ -67,7 +67,7 @@ public class RabbitMQSinkBuilderTest {
   @Test(expected = IllegalArgumentException.class)
   public void buildWithFiveArgs() throws Exception {
     // When
-    builder.build(context, new String[]{"arg1", "arg2", "arg3", "arg4", "arg5"});
+    builder.create(context, new String[]{"arg1", "arg2", "arg3", "arg4", "arg5"});
 
     // Then IllegalArgumentException is thrown
   }
@@ -75,7 +75,7 @@ public class RabbitMQSinkBuilderTest {
   @Test(expected = IllegalArgumentException.class)
   public void buildWithSixArgs() throws Exception {
     // When
-    builder.build(context, new String[]{"arg1", "arg2", "arg3", "arg4", "arg5", "arg6"});
+    builder.create(context, new String[]{"arg1", "arg2", "arg3", "arg4", "arg5", "arg6"});
 
     // Then IllegalArgumentException is thrown
   }
@@ -86,7 +86,7 @@ public class RabbitMQSinkBuilderTest {
     final
     EventSink
         sink =
-        builder.build(context, new String[]{"arg1", "arg2", "arg3", "arg4", "arg5", "arg6", "arg7"});
+        builder.create(context, new String[]{"arg1", "arg2", "arg3", "arg4", "arg5", "arg6", "arg7"});
 
     // Then
     assertNotNull(sink);
@@ -96,7 +96,7 @@ public class RabbitMQSinkBuilderTest {
   @Test(expected = IllegalArgumentException.class)
   public void buildWithEightArgsInvalidFormat() throws Exception {
     // When
-    builder.build(context, new String[]{"arg1", "arg2", "arg3", "arg4", "arg5", "arg6", "arg7", "arg8"});
+    builder.create(context, new String[]{"arg1", "arg2", "arg3", "arg4", "arg5", "arg6", "arg7", "arg8"});
 
     // Then IllegalArgumentException is thrown
   }
@@ -106,7 +106,7 @@ public class RabbitMQSinkBuilderTest {
     // When
     EventSink
         sink =
-        builder.build(context, new String[]{"arg1", "arg2", "arg3", "arg4", "arg5", "arg6", "arg7", "json"});
+        builder.create(context, new String[]{"arg1", "arg2", "arg3", "arg4", "arg5", "arg6", "arg7", "json"});
 
     // Then
     assertNotNull(sink);
@@ -118,7 +118,7 @@ public class RabbitMQSinkBuilderTest {
     final
     EventSink
         sink =
-        builder.build(context, new String[]{"arg1", "arg2", "arg3", "arg4", "arg5", "arg6", "arg7", "json", "arg9"});
+        builder.create(context, new String[]{"arg1", "arg2", "arg3", "arg4", "arg5", "arg6", "arg7", "json", "arg9"});
 
     // Then
     assertNotNull(sink);

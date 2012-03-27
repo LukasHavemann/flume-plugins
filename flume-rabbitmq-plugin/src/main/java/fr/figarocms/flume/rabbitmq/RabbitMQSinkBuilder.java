@@ -20,17 +20,28 @@ public class RabbitMQSinkBuilder extends SinkFactory.SinkBuilder {
   private static final Logger LOG = LoggerFactory.getLogger(RabbitMQSinkBuilder.class);
 
   @Override
+  @Deprecated
   public EventSink build(Context context, String... argv) {
+    // updated interface calls build(Context,Object...) instead
+    throw new RuntimeException(
+        "Old sink builder for RabbitMQ sink should not be exercised");
+  }
+
+  @Override
+  public EventSink create(Context context, Object... argv) {
     Preconditions.checkArgument(argv.length >= 7 && argv.length <= 9,
                                 "usage: rabbit(address, username, password, vhost, exchange, exchange_type, routing_key[, format, media_type])");
 
     // Create Producer
-    Producer producer = new SimpleProducer(argv[0], argv[1], argv[2], argv[3], argv[4], argv[5], argv[6]);
+    Producer
+        producer =
+        new SimpleProducer(argv[0].toString(), argv[1].toString(), argv[2].toString(), argv[3].toString(),
+                           argv[4].toString(), argv[5].toString(), argv[6].toString());
     String mediaType = null;
-    // Define message media type
     OutputFormat fmt = DebugOutputFormat.builder().create();
+    // Define message media type
     if (argv.length == 9) {
-      mediaType = argv[8];
+      mediaType = argv[8].toString();
     }
     // Define output format
     if (argv.length >= 8) {

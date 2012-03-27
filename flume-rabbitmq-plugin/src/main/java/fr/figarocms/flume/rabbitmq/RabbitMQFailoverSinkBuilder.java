@@ -25,16 +25,24 @@ public class RabbitMQFailoverSinkBuilder extends SinkFactory.SinkBuilder {
   private static final Logger LOG = LoggerFactory.getLogger(RabbitMQFailoverSinkBuilder.class);
 
   @Override
+  @Deprecated
   public EventSink build(Context context, String... argv) {
+    // updated interface calls build(Context,Object...) instead
+    throw new RuntimeException(
+        "Old sink builder for RabbitMQ sink should not be exercised");
+  }
+
+  @Override
+  public EventSink create(Context context, Object... argv) {
     Preconditions.checkArgument(argv.length >= 7 && argv.length <= 9,
                                 "usage: rabbitFailover(address, username, password, vhost, exchange, exchange_type, routing_key[, format, media_type])");
-    Preconditions.checkArgument(!isNullOrEmpty(argv[0]),
+    Preconditions.checkArgument(!isNullOrEmpty(argv[0].toString()),
                                 "Invalid configuration: 'addresses' must be non-null or empty.");
     String mediaType = null;
     // Define message media type
     OutputFormat fmt = DebugOutputFormat.builder().create();
     if (argv.length == 9) {
-      mediaType = argv[8];
+      mediaType = argv[8].toString();
     }
     // Define output format
     if (argv.length >= 8) {
@@ -47,9 +55,11 @@ public class RabbitMQFailoverSinkBuilder extends SinkFactory.SinkBuilder {
       }
     }
 
-    final String[] addresses = argv[0].split(",");
-    return failover(addresses, argv[1], argv[2], argv[3], argv[4], argv[5], argv[6], fmt, mediaType);
+    final String[] addresses = argv[0].toString().split(",");
+    return failover(addresses, argv[1].toString(), argv[2].toString(), argv[3].toString(), argv[4].toString(),
+                    argv[5].toString(), argv[6].toString(), fmt, mediaType);
   }
+
 
   private EventSink failover(String[] addresses, String username, String password, String vhost, String exchange,
                              String exchange_type, String routing_key, OutputFormat format, String mediaType) {
