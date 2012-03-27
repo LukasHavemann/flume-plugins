@@ -2,7 +2,7 @@ package fr.figarocms.flume.formatter;
 
 import com.cloudera.flume.core.Event;
 import com.cloudera.flume.core.EventImpl;
-import com.cloudera.util.Clock;
+
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.type.TypeReference;
 import org.junit.Before;
@@ -24,7 +24,8 @@ public class IntegrationTest {
 
   @Before
   public void setUp() throws Exception {
-    formatter = new JsonObjectFormatter("formatter.yml");
+    final JsonObjectFormatterBuilder builder = new JsonObjectFormatterBuilder();
+    formatter = (JsonObjectFormatter) builder.build("formatter.yml");
     mapper = new ObjectMapper();
   }
 
@@ -32,36 +33,23 @@ public class IntegrationTest {
   public void nominal() throws Exception {
     //Given
     Event event = nominalEvent();
-	InputStream expected = ClassLoader.getSystemClassLoader().getResourceAsStream("expected.json");
+    InputStream expected = ClassLoader.getSystemClassLoader().getResourceAsStream("expected.json");
 
     // When
     ByteArrayOutputStream stream = new ByteArrayOutputStream();
     formatter.format(stream, event);
 
     // Then
-	ByteArrayInputStream actual = new ByteArrayInputStream(stream.toByteArray());
-	final byte[] bytes = stream.toByteArray();
-    System.out.print(new String(bytes));
-
-	assertEquals(
-			mapper.readValue(expected, new TypeReference<HashMap<String, Object>>(){}),
-			mapper.readValue(actual, new TypeReference<HashMap<String, Object>>(){})
-	);
-  }
-
-  @Test
-  public void withoutConfigFile() throws Exception {
-    //Given
-	formatter = new JsonObjectFormatter(null);
-    Event event = nominalEvent();
-
-    // When
-    ByteArrayOutputStream stream = new ByteArrayOutputStream();
-    formatter.format(stream, event);
-
-    // Then
+    ByteArrayInputStream actual = new ByteArrayInputStream(stream.toByteArray());
     final byte[] bytes = stream.toByteArray();
     System.out.print(new String(bytes));
+
+    assertEquals(
+        mapper.readValue(expected, new TypeReference<HashMap<String, Object>>() {
+        }),
+        mapper.readValue(actual, new TypeReference<HashMap<String, Object>>() {
+        })
+    );
   }
 
 
@@ -77,7 +65,7 @@ public class IntegrationTest {
     Object source = new Integer(13213);
     byte[] data = new byte[Integer.SIZE];
     ByteBuffer buffer = ByteBuffer.wrap(data);
-    buffer.putInt((Integer)source);
+    buffer.putInt((Integer) source);
     event.set("attr_integer", data);
 
     // Long attribute

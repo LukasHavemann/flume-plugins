@@ -11,8 +11,8 @@ For now there's just one Json Object Formatter.
 
 ```
   <property>
-    <name>flume.plugin.classes</name>                                         
-    <value>fr.figarocms.flume.formatter.JsonObjectFormatter</value>
+    <name>flume.plugin.outputformat.classes</name>
+    <value>fr.figarocms.flume.formatter.JsonObjectFormatterBuilder</value>
     <description>Comma separated list of plugins</description>
   </property>
 ```

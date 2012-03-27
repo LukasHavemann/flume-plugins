@@ -9,36 +9,10 @@ import static org.junit.Assert.assertNotNull;
 
 public class JsonObjectFormatterTest {
 
-  private FormatFactory.OutputFormatBuilder builder;
-
-  @Before
-  public void setUp() throws Exception {
-    builder = JsonObjectFormatter.builder();
-  }
+  private JsonObjectFormatter formatter;
 
   @Test
-  public void buildWithoutArgs() throws Exception {
-    // When
-    OutputFormat format = builder.build();
-
-    // Then
-    assertNotNull(format);
-  }
-
-  @Test
-  public void buildWithOneArg() throws Exception {
-    // When
-    OutputFormat format = builder.build("formatter.yml");
-    // Then
-    assertNotNull(format);
-  }
-
-  @Test(expected = IllegalArgumentException.class)
-  public void buildWithMoreThanOneArgs() throws Exception {
-    // When
-    OutputFormat format = builder.build("formatter.yml", "other", "args");
-
-    // Then IllegalArgumentException is thrown
-
+  public void formatter() throws Exception {
+    //To change body of created methods use File | Settings | File Templates.
   }
 }

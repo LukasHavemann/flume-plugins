@@ -1,8 +1,11 @@
 package fr.figarocms.flume.formatter;
 
-import com.cloudera.flume.core.Event;
-import com.cloudera.flume.handlers.text.output.AbstractOutputFormat;
+import com.google.common.base.Preconditions;
 
+import com.cloudera.flume.handlers.text.FormatFactory;
+import com.cloudera.flume.handlers.text.output.OutputFormat;
+
+import org.codehaus.jackson.map.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.yaml.snakeyaml.Yaml;
@@ -11,19 +14,23 @@ import org.yaml.snakeyaml.error.YAMLException;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.OutputStream;
 import java.net.URL;
 
 import fr.figarocms.flume.formatter.config.Formatter;
 
-public abstract class ObjectFormatter extends AbstractOutputFormat {
+public class JsonObjectFormatterBuilder extends FormatFactory.OutputFormatBuilder {
 
-  protected static final Logger LOG = LoggerFactory.getLogger(ObjectFormatter.class);
+  private static final Logger LOG = LoggerFactory.getLogger(JsonObjectFormatterBuilder.class);
 
+  private static final String NAME = "json_object";
   private Formatter formatter;
 
-  public ObjectFormatter(String filename) {
+  @Override
+  public OutputFormat build(String... args) {
+    Preconditions.checkArgument(args.length >= 0 && args.length <= 1, "usage: json_object([filename])");
+
+    String filename = args.length == 1 ? args[0] : null;
+
     // Default Formatter
     if (filename == null) {
       formatter = new Formatter();
@@ -49,13 +56,13 @@ public abstract class ObjectFormatter extends AbstractOutputFormat {
         throw new IllegalArgumentException("File '" + filename + "' is not a valid yml", y);
       }
     }
+    OutputFormat format = new JsonObjectFormatter(formatter, new ObjectMapper());
+    format.setBuilder(this);
+    return format;
   }
 
   @Override
-  public void format(OutputStream o, Event e) throws IOException {
-    Object obj = formatter.format(e);
-    format(o, obj);
+  public String getName() {
+    return NAME;
   }
-
-  public abstract void format(OutputStream o, Object obj) throws IOException;
 }
