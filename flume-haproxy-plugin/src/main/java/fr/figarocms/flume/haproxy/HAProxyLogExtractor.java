@@ -39,7 +39,7 @@ import fr.figarocms.flume.haproxy.processor.HeaderProcessor;
 
 public class HAProxyLogExtractor<S extends EventSink> extends EventSinkDecorator<S> {
 
-  static final Logger LOG = LoggerFactory.getLogger(HAProxyLogExtractor.class);
+  protected static final Logger LOG = LoggerFactory.getLogger(HAProxyLogExtractor.class);
 
   private Mapping mapping;
 
