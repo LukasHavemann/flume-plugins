@@ -54,6 +54,7 @@ public class URIParamsExtractor<S extends EventSink> extends EventSinkDecorator<
     } else {
       LOG.warn("Attribute '" + this.attributeName + "' not found in event");
     }
+    super.append(e);
   }
 
   public static SinkFactory.SinkDecoBuilder builder() {
