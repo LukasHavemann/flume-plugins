@@ -1,9 +1,10 @@
 package fr.figarocms.flume.formatter.mapping;
 
-import com.cloudera.flume.core.Event;
 import com.google.common.base.Function;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
+
+import com.cloudera.flume.core.Event;
 
 import java.util.List;
 import java.util.Map;
@@ -28,7 +29,7 @@ public class Mapping {
 
   public Map<String, Object> map(Event e) {
     Map<String, Object> map = newHashMap();
-	// Map Event properties
+    // Map Event properties
     map.put("body", convert(e.getBody(), "string"));
     map.put("timestamp", e.getTimestamp());
     map.put("host", e.getHost());

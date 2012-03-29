@@ -58,6 +58,34 @@ public class URIParamsExtractorTest {
   }
 
   @Test
+  public void withoutParams() throws Exception {
+    // Given
+    extractor = new URIParamsExtractor(null, "uri", null);
+    extractor.LOG = LOG;
+    event.set("uri", "/uri".getBytes());
+
+    // When
+    extractor.append(event);
+
+    // Then
+    verify(LOG).warn("Attribute 'uri' is an URI without parameters");
+  }
+
+  @Test
+  public void withoutParameterValue() throws Exception {
+    // Given
+    extractor = new URIParamsExtractor(null, "uri", null);
+    event.set("uri", "/uri?param1".getBytes());
+
+    // When
+    extractor.append(event);
+
+    // Then
+    assertEquals(event.get("uri.param1"), null);
+  }
+
+
+  @Test
   public void notAnURI() throws Exception {
     // Given
     extractor = new URIParamsExtractor(null, "uri", null);

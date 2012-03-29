@@ -9,7 +9,7 @@ import static org.junit.Assert.assertEquals;
 
 public class FormatValueTransformerTest {
 
-    private FormatValueTransformer transformer;
+  private FormatValueTransformer transformer;
 
   @Test
   public void transform() throws Exception {
@@ -24,6 +24,20 @@ public class FormatValueTransformerTest {
 
     // Then
     assertEquals(expected, o);
+  }
+
+  @Test
+  public void nullValue() throws Exception {
+    // Given
+    Map<String, Object> objectMap = Maps.newHashMap();
+    objectMap.put("test", null);
+    transformer = new FormatValueTransformer(objectMap);
+
+    // When
+    Float o = (Float) transformer.apply("%{test}");
+
+    // Then
+    assertEquals(null, o);
   }
 
 }

@@ -1,10 +1,12 @@
 package fr.figarocms.flume.formatter.config;
 
-import com.cloudera.flume.core.Event;
 import com.google.common.collect.Maps;
-import fr.figarocms.flume.formatter.mapping.Mapping;
+
+import com.cloudera.flume.core.Event;
 
 import java.util.Map;
+
+import fr.figarocms.flume.formatter.mapping.Mapping;
 
 public class Formatter {
 
@@ -25,7 +27,7 @@ public class Formatter {
     }
 
     Map<String, Object> objectMap = mapping.map(e);
-    if(format == null){
+    if (format == null) {
       return objectMap;
     }
     return Maps.transformValues(format, new FormatValueTransformer(objectMap));

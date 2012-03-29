@@ -32,4 +32,12 @@ public class FloatConverterTest {
     assertEquals(expected, value);
   }
 
+  @Test
+  public void nullValue() throws Exception {
+    // When
+    Float value = converter.convert(null);
+
+    // Then
+    assertEquals(null, value);
+  }
 }

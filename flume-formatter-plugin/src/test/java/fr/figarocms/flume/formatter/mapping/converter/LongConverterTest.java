@@ -30,4 +30,13 @@ public class LongConverterTest {
     // Then
     assertEquals(expected, value);
   }
+
+  @Test
+  public void nullValue() throws Exception {
+    // When
+    Long value = converter.convert(null);
+
+    // Then
+    assertEquals(null, value);
+  }
 }

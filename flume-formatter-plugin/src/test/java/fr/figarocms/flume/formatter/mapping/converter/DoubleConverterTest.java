@@ -31,4 +31,12 @@ public class DoubleConverterTest {
     assertEquals(expected, value);
   }
 
+  @Test
+  public void nullValue() throws Exception {
+    // When
+    Double value = converter.convert(null);
+
+    // Then
+    assertEquals(null, value);
+  }
 }

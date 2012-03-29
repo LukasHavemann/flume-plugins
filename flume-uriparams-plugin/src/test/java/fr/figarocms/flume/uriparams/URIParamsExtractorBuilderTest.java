@@ -4,7 +4,6 @@ import com.cloudera.flume.conf.Context;
 import com.cloudera.flume.core.EventSink;
 import com.cloudera.flume.core.EventSinkDecorator;
 
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 

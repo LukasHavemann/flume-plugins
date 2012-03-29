@@ -27,7 +27,7 @@ public class GeoIPExtractorBuilder extends SinkFactory.SinkDecoBuilder {
 
     File database = new File(url == null ? argv[0] : url.getFile());
     if (!database.exists()) {
-       throw new IllegalArgumentException("File '" + argv[0] + "' does not exist");
+      throw new IllegalArgumentException("File '" + argv[0] + "' does not exist");
     }
 
     try {

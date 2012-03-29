@@ -24,7 +24,7 @@ public class ConvertersTest {
     Object source = new Integer(13213);
     byte[] data = new byte[Integer.SIZE];
     ByteBuffer buffer = ByteBuffer.wrap(data);
-    buffer.putInt((Integer)source);
+    buffer.putInt((Integer) source);
     Integer value = (Integer) Converters.convert(data, "integer");
 
     // Then

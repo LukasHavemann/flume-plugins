@@ -32,5 +32,13 @@ public class IntegerConverterTest {
     assertEquals(expected, value);
   }
 
+  @Test
+  public void nullValue() throws Exception {
+    // When
+    Integer value = converter.convert(null);
+
+    // Then
+    assertEquals(null, value);
+  }
 
 }

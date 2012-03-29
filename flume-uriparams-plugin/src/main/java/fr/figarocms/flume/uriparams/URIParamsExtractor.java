@@ -13,14 +13,13 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
 import static java.lang.String.format;
 import static java.nio.charset.Charset.defaultCharset;
 
-public class URIParamsExtractor <S extends EventSink> extends EventSinkDecorator<S> {
+public class URIParamsExtractor<S extends EventSink> extends EventSinkDecorator<S> {
 
   protected static Logger LOG = LoggerFactory.getLogger(URIParamsExtractor.class);
   private String attributeName;
@@ -36,18 +35,23 @@ public class URIParamsExtractor <S extends EventSink> extends EventSinkDecorator
 
   @Override
   public void append(Event e) throws IOException, InterruptedException {
-    if(e.getAttrs().containsKey(attributeName)){
-      try{
-      String uriString = new String(e.get(attributeName));
-      URI uri = URI.create(uriString);
-      List<NameValuePair> pairs = URLEncodedUtils.parse(uri, defaultCharset().name());
-      for (NameValuePair pair : pairs) {
-        e.set(format("%s.%s", prefix, pair.getName()),pair.getValue().getBytes());
-      }
-      }catch(IllegalArgumentException ex){
+    if (e.getAttrs().containsKey(attributeName)) {
+      try {
+        String uriString = new String(e.get(attributeName));
+        URI uri = URI.create(uriString);
+        List<NameValuePair> pairs = URLEncodedUtils.parse(uri, defaultCharset().name());
+        if (pairs.isEmpty()) {
+          LOG.warn("Attribute '" + this.attributeName + "' is an URI without parameters");
+        }
+        for (NameValuePair pair : pairs) {
+          final String value = pair.getValue();
+          final String name = pair.getName();
+          e.set(format("%s.%s", prefix, name), (value != null ? value.getBytes() : null));
+        }
+      } catch (IllegalArgumentException ex) {
         LOG.warn("Unable to parse attribute '" + this.attributeName + "' as an URI");
       }
-    }else {
+    } else {
       LOG.warn("Attribute '" + this.attributeName + "' not found in event");
     }
   }
@@ -60,7 +64,7 @@ public class URIParamsExtractor <S extends EventSink> extends EventSinkDecorator
     List<Pair<String, SinkFactory.SinkDecoBuilder>> builders =
         new ArrayList<Pair<String, SinkFactory.SinkDecoBuilder>>();
     builders.add(new Pair<String, SinkFactory.SinkDecoBuilder>("uriparams",
-                                                   builder()));
+                                                               builder()));
     return builders;
   }
 }

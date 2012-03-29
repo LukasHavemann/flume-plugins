@@ -1,10 +1,8 @@
 package fr.figarocms.flume.formatter;
 
 import com.cloudera.flume.core.Event;
-import com.cloudera.flume.handlers.text.FormatFactory;
 import com.cloudera.flume.handlers.text.output.AbstractOutputFormat;
-import com.cloudera.flume.handlers.text.output.OutputFormat;
-import com.google.common.base.Preconditions;
+
 import org.codehaus.jackson.map.ObjectMapper;
 
 import java.io.IOException;

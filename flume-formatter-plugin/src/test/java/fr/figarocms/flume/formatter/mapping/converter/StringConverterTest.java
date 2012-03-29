@@ -24,4 +24,13 @@ public class StringConverterTest {
     assertEquals(expected, value);
   }
 
+  @Test
+  public void nullValue() throws Exception {
+    // When
+    String value = converter.convert(null);
+
+    // Then
+    assertEquals(null, value);
+  }
+
 }

@@ -139,8 +139,8 @@ public class RabbitMQFailoverSinkBuilderTest {
     EventSink
         sink =
         builder.create(context,
-                      new String[]{"host1:1111,host2:1112,host3:1113", "arg2", "arg3", "arg4", "arg5", "arg6", "arg7",
-                                   "json"});
+                       new String[]{"host1:1111,host2:1112,host3:1113", "arg2", "arg3", "arg4", "arg5", "arg6", "arg7",
+                                    "json"});
 
     // Then
     assertNotNull(sink);

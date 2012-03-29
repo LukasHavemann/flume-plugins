@@ -36,8 +36,8 @@ public class EventFilterBuilderTest {
 
   @Test
   public void nominalAbsoluteFile() {
-	ClassLoader classLoader = ClassLoader.getSystemClassLoader();
-	String file = classLoader.getResource("nominal.yml").getFile();
+    ClassLoader classLoader = ClassLoader.getSystemClassLoader();
+    String file = classLoader.getResource("nominal.yml").getFile();
     EventFilter filter = builder.build(mock(Context.class), file);
     assertNotNull(filter);
   }
