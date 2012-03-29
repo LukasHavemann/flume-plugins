@@ -4,7 +4,7 @@
     <parent>
         <artifactId>flume-plugins</artifactId>
         <groupId>fr.figarocms.flume</groupId>
-        <version>1.1</version>
+        <version>1.2-SNAPSHOT</version>
     </parent>
     <artifactId>flume-uriparams-plugin</artifactId>
     <packaging>jar</packaging>
