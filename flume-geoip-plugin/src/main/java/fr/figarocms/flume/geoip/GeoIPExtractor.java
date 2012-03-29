@@ -108,10 +108,10 @@ public class GeoIPExtractor<S extends EventSink> extends EventSinkDecorator<S> {
           e.set(this.dstPrefix + ".latitude", Bytes.toBytes(l.latitude));
         }
       } else {
-        LOG.warn("Unable to parse IP in '" + this.attributeName + "'");
+        LOG.warn("Unable to parse attribute '" + this.attributeName + "' as an IP");
       }
     } else {
-      LOG.warn("no Field '" + this.attributeName + "' in event");
+      LOG.warn("Attribute '" + this.attributeName + "' not found in event");
     }
 
     super.append(e);

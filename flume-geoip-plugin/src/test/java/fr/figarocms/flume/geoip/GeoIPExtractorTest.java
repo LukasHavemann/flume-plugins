@@ -73,7 +73,7 @@ public class GeoIPExtractorTest {
 
     openAppendClose(e);
 
-    verify(LOG).warn("no Field 'ip' in event");
+    verify(LOG).warn("Attribute 'ip' not found in event");
   }
 
   @Test
@@ -85,7 +85,7 @@ public class GeoIPExtractorTest {
 
     openAppendClose(e);
 
-    verify(LOG).warn("Unable to parse IP in 'ip'");
+    verify(LOG).warn("Unable to parse attribute 'ip' as an IP");
   }
 
   private void openAppendClose(Event e) throws IOException, InterruptedException {

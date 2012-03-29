@@ -23,8 +23,8 @@ public class GeoIPExtractorBuilderTest {
   @Test
   public void nominalAbsoluteFile() {
     GeoIPExtractorBuilder gb = new GeoIPExtractorBuilder();
-	ClassLoader classLoader = ClassLoader.getSystemClassLoader();
-	String file = classLoader.getResource("file.dat").getFile();
+    ClassLoader classLoader = ClassLoader.getSystemClassLoader();
+    String file = classLoader.getResource("file.dat").getFile();
     GeoIPExtractor<EventSink> g = gb.build(mock(Context.class), new String[]{file});
     Assert.assertNotNull(g);
   }
