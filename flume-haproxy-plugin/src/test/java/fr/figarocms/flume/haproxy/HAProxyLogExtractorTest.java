@@ -102,6 +102,17 @@ public class HAProxyLogExtractorTest {
     assertFalse("referrer was not added to event", e.getAttrs().containsKey("haproxy.referrer"));
   }
 
+  @Test
+  public void parseRawBody() throws IOException, InterruptedException {
+
+      Event
+        e =
+        runEvent(
+            "192.168.4.45:59901 [01/Jul/2011:17:22:59.083] myfrontend mybackend/myserverbackend 34/0/0/0/35 404 454 - - ---- 1/1/0/1/0 0/0 {} {} \"GET /index.php/foo?bar=1 HTTP/1.1\"");
+
+      assertEquals("uri was properly parsed", "/index.php/foo?bar=1", new String(e.get("haproxy.uri")));
+  }
+
 
   @Test
   public void parseInvalidBody() throws IOException, InterruptedException {

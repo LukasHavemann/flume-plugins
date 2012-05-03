@@ -30,7 +30,7 @@ public class Mapping {
     //named regex parsing haproxy syslog format access log
     String
         rx =
-        "^(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) +\\d{1,2} \\d{2}:\\d{2}:\\d{2} ([-\\w]+ )?\\w+\\[\\d+\\]: "
+        "^((Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) +\\d{1,2} \\d{2}:\\d{2}:\\d{2} ([-\\w]+ )?\\w+\\[\\d+\\]: )?"
         + "({clientIp}\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}):"
         + "({clientPort}\\d+) "
         + "\\[({timestamp}\\d{2}/(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)/\\d{4}:\\d{2}:\\d{2}:\\d{2}.\\d{3})\\] "
