@@ -3,7 +3,7 @@
     <parent>
         <groupId>fr.figarocms.flume</groupId>
         <artifactId>flume-plugins</artifactId>
-        <version>1.3</version>
+        <version>1.4-SNAPSHOT</version>
     </parent>
     <artifactId>flume-filter-plugin</artifactId>
     <packaging>jar</packaging>
