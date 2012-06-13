@@ -42,32 +42,11 @@ public class URIExtractor<S extends EventSink> extends EventSinkDecorator<S> {
                 URI uri = URI.create(uriString);
 
                 if (null != uri.getHost()) {
-
-                    String hostAttribute = new StringBuilder(prefix)
-                            .append(SEPARATOR)
-                            .append(HOST_ATTRIBUTE)
-                            .toString();
-
-                    e.set(hostAttribute, uri.getHost().getBytes());
+                    extractHost(e, uri);
                 }
 
                 if (null != uri.getQuery()) {
-
-                    List<NameValuePair> pairs = URLEncodedUtils.parse(uri, defaultCharset().name());
-
-                    for (NameValuePair pair : pairs) {
-                        final String value = pair.getValue();
-                        final String name = pair.getName();
-
-                        String paramAttribute = new StringBuilder(prefix)
-                                .append(SEPARATOR)
-                                .append(PARAM_ATTRIBUTE)
-                                .append(SEPARATOR)
-                                .append(name)
-                                .toString();
-
-                        e.set(paramAttribute, (value != null ? value.getBytes() : null));
-                    }
+                    extractQuery(e, uri);
                 }
             } catch (IllegalArgumentException ex) {
                 LOG.warn("Unable to parse attribute '" + this.attributeName + "' as an URI");
@@ -75,7 +54,36 @@ public class URIExtractor<S extends EventSink> extends EventSinkDecorator<S> {
         } else {
             LOG.warn("Attribute '" + this.attributeName + "' not found in event");
         }
+
         super.append(e);
+    }
+
+    
+    private void extractHost(Event e, URI uri) {
+        String hostAttribute = new StringBuilder(prefix)
+                .append(SEPARATOR)
+                .append(HOST_ATTRIBUTE)
+                .toString();
+
+        e.set(hostAttribute, uri.getHost().getBytes());
+    }
+
+    private void extractQuery(Event e, URI uri) {
+        List<NameValuePair> pairs = URLEncodedUtils.parse(uri, defaultCharset().name());
+
+        for (NameValuePair pair : pairs) {
+            final String value = pair.getValue();
+            final String name = pair.getName();
+
+            String paramAttribute = new StringBuilder(prefix)
+                    .append(SEPARATOR)
+                    .append(PARAM_ATTRIBUTE)
+                    .append(SEPARATOR)
+                    .append(name)
+                    .toString();
+
+            e.set(paramAttribute, (value != null ? value.getBytes() : null));
+        }
     }
 
     public static SinkFactory.SinkDecoBuilder builder() {
