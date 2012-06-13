@@ -4,7 +4,7 @@
     <parent>
         <groupId>fr.figarocms.flume</groupId>
         <artifactId>flume-plugins</artifactId>
-        <version>1.5-SNAPSHOT</version>
+        <version>1.5</version>
     </parent>
     <artifactId>flume-geoip-plugin</artifactId>
     <packaging>jar</packaging>
