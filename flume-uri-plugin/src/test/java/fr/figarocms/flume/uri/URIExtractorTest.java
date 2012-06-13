@@ -61,32 +61,6 @@ public class URIExtractorTest {
         assertEquals(new String(event.get("uri.param.param2")), "bar");
     }
 
-    @Test
-    public void withoutParams() throws Exception {
-        // Given
-        getExtractor(null);
-        event.set("uri", "/uri".getBytes());
-
-        // When
-        openAppendClose(event);
-
-        // Then
-        verify(LOG).warn("Attribute 'uri' is an URI without parameters");
-    }
-
-    @Test
-    public void withoutHost() throws Exception {
-        // Given
-        getExtractor(null);
-        event.set("uri", "/uri".getBytes());
-
-        // When
-        openAppendClose(event);
-
-        // Then
-        verify(LOG).warn("Given uri does not contains host");
-    }
-
 
     @Test
     public void withoutParameterValue() throws Exception {

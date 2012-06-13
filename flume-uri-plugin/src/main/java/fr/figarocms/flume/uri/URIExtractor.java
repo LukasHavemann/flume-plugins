@@ -49,26 +49,25 @@ public class URIExtractor<S extends EventSink> extends EventSinkDecorator<S> {
                             .toString();
 
                     e.set(hostAttribute, uri.getHost().getBytes());
-                } else {
-                    LOG.warn("Given uri does not contains host");
                 }
 
-                List<NameValuePair> pairs = URLEncodedUtils.parse(uri, defaultCharset().name());
-                if (pairs.isEmpty()) {
-                    LOG.warn("Attribute '" + this.attributeName + "' is an URI without parameters");
-                }
-                for (NameValuePair pair : pairs) {
-                    final String value = pair.getValue();
-                    final String name = pair.getName();
+                if (null != uri.getQuery()) {
 
-                    String paramAttribute = new StringBuilder(prefix)
-                            .append(SEPARATOR)
-                            .append(PARAM_ATTRIBUTE)
-                            .append(SEPARATOR)
-                            .append(name)
-                            .toString();
+                    List<NameValuePair> pairs = URLEncodedUtils.parse(uri, defaultCharset().name());
 
-                    e.set(paramAttribute, (value != null ? value.getBytes() : null));
+                    for (NameValuePair pair : pairs) {
+                        final String value = pair.getValue();
+                        final String name = pair.getName();
+
+                        String paramAttribute = new StringBuilder(prefix)
+                                .append(SEPARATOR)
+                                .append(PARAM_ATTRIBUTE)
+                                .append(SEPARATOR)
+                                .append(name)
+                                .toString();
+
+                        e.set(paramAttribute, (value != null ? value.getBytes() : null));
+                    }
                 }
             } catch (IllegalArgumentException ex) {
                 LOG.warn("Unable to parse attribute '" + this.attributeName + "' as an URI");
