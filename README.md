@@ -8,4 +8,4 @@ Collection of Flume Plugins developed and used at Figaro Classifieds :
  * [Flume HAProxy Plugin](https://github.com/figarocms/flume-plugins/tree/master/flume-haproxy-plugin) : Event Sink Decorator which parse HAProxy log format in order to augment Flume Event attributes
  * [Flume HBase Plugin](https://github.com/figarocms/flume-plugins/tree/master/flume-hbase-plugin) : Event Sink to send events to HBase
  * [Flume RabbitMQ Plugin](https://github.com/figarocms/flume-plugins/tree/master/flume-rabbitmq-plugin) : Event Sink to send events to RabbitMQ  
- * [Flume URI Params Plugin](https://github.com/figarocms/flume-plugins/tree/master/flume-uriparams-plugin) : Event Sink Decorator which extract URI Parameters from an Event attribute
+ * [Flume URI Params Plugin](https://github.com/figarocms/flume-plugins/tree/master/flume-uri-plugin) : Event Sink Decorator which extract URI Parameters from an Event attribute
