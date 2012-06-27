@@ -1,19 +1,13 @@
 package fr.figarocms.flume.filter.config;
 
+import com.cloudera.flume.core.Event;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Lists;
-
-import com.cloudera.flume.core.Event;
-
+import fr.figarocms.flume.filter.predicate.EventPredicates;
 import org.junit.Before;
 import org.junit.Test;
 
-import fr.figarocms.flume.filter.predicate.EventPredicates;
-
-import static com.google.common.base.Predicates.and;
-import static com.google.common.base.Predicates.containsPattern;
-import static com.google.common.base.Predicates.equalTo;
-import static com.google.common.base.Predicates.or;
+import static com.google.common.base.Predicates.*;
 import static org.junit.Assert.assertEquals;
 
 public class PriorityPredicateBuilderTest {

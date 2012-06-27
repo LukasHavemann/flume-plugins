@@ -1,13 +1,11 @@
 package fr.figarocms.flume.filter;
 
-import com.google.common.base.Predicate;
-
 import com.cloudera.flume.conf.SinkFactory;
 import com.cloudera.flume.core.Event;
 import com.cloudera.flume.core.EventSink;
 import com.cloudera.flume.core.EventSinkDecorator;
 import com.cloudera.util.Pair;
-
+import com.google.common.base.Predicate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

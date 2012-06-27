@@ -17,15 +17,13 @@
  */
 package fr.figarocms.flume.hbase;
 
-import com.google.common.base.Preconditions;
-
 import com.cloudera.flume.conf.Context;
 import com.cloudera.flume.conf.SinkFactory;
 import com.cloudera.flume.conf.SinkFactory.SinkBuilder;
 import com.cloudera.flume.core.Event;
 import com.cloudera.flume.core.EventSink;
 import com.cloudera.util.Pair;
-
+import com.google.common.base.Preconditions;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hbase.HBaseConfiguration;
 import org.apache.hadoop.hbase.HColumnDescriptor;

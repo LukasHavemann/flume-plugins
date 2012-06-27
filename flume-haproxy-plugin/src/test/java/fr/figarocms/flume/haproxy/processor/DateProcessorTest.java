@@ -1,7 +1,6 @@
 package fr.figarocms.flume.haproxy.processor;
 
 import com.cloudera.flume.core.Event;
-
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.junit.Before;

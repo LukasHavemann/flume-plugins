@@ -1,22 +1,14 @@
 package fr.figarocms.flume.filter.config;
 
-import com.google.common.base.Predicate;
-import com.google.common.base.Predicates;
-import com.google.common.collect.Lists;
-
 import com.cloudera.flume.core.Event;
-
+import com.google.common.base.Predicate;
+import com.google.common.collect.Lists;
+import fr.figarocms.flume.filter.predicate.EventPredicates;
 import org.junit.Before;
 import org.junit.Test;
 
-import fr.figarocms.flume.filter.predicate.EventPredicates;
-
-import static com.google.common.base.Predicates.and;
-import static com.google.common.base.Predicates.containsPattern;
-import static com.google.common.base.Predicates.equalTo;
-import static com.google.common.base.Predicates.or;
+import static com.google.common.base.Predicates.*;
 import static fr.figarocms.flume.filter.predicate.DateTimePredicates.matchesDateFormat;
-import static fr.figarocms.flume.filter.predicate.URIPredicates.containsParameter;
 import static org.junit.Assert.assertEquals;
 
 public class AttributePredicateBuilderTest {
@@ -177,45 +169,4 @@ public class AttributePredicateBuilderTest {
         ), predicate);
   }
 
-  @Test
-  public void oneParameterAndValue() throws Exception {
-    // Given
-    ParameterPredicateBuilder ps = new ParameterPredicateBuilder();
-    ps.setName("parameter");
-    ps.setValue("value");
-
-    builder.setParameters(Lists.newArrayList(ps));
-
-    // When
-    Predicate<Event> predicate = builder.build();
-
-    // Then
-    assertEquals(
-        EventPredicates.containsAttribute("attribute1", containsParameter("parameter", equalTo("value"))),
-        predicate);
-  }
-
-  @Test
-  public void twoParametersAndValues() throws Exception {
-    // Given
-    ParameterPredicateBuilder ps1 = new ParameterPredicateBuilder();
-    ps1.setName("parameter1");
-    ps1.setValue("value1");
-
-    ParameterPredicateBuilder ps2 = new ParameterPredicateBuilder();
-    ps2.setName("parameter2");
-    ps2.setValue("value2");
-
-    builder.setParameters(Lists.newArrayList(ps1, ps2));
-
-    // When
-    Predicate<Event> predicate = builder.build();
-
-    // Then
-    assertEquals(
-        EventPredicates.containsAttribute("attribute1", Predicates
-            .and(containsParameter("parameter1", equalTo("value1")),
-                 containsParameter("parameter2", equalTo("value2"))))
-        , predicate);
-  }
 }

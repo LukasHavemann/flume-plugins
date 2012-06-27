@@ -2,7 +2,6 @@ package fr.figarocms.flume.filter.predicate;
 
 import com.google.common.base.Objects;
 import com.google.common.base.Predicate;
-
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 

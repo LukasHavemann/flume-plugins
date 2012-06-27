@@ -58,7 +58,7 @@ public class URIExtractor<S extends EventSink> extends EventSinkDecorator<S> {
         super.append(e);
     }
 
-    
+
     private void extractHost(Event e, URI uri) {
         String hostAttribute = new StringBuilder(prefix)
                 .append(SEPARATOR)
@@ -69,20 +69,24 @@ public class URIExtractor<S extends EventSink> extends EventSinkDecorator<S> {
     }
 
     private void extractQuery(Event e, URI uri) {
-        List<NameValuePair> pairs = URLEncodedUtils.parse(uri, defaultCharset().name());
+        try {
+            List<NameValuePair> pairs = URLEncodedUtils.parse(uri, defaultCharset().name());
 
-        for (NameValuePair pair : pairs) {
-            final String value = pair.getValue();
-            final String name = pair.getName();
+            for (NameValuePair pair : pairs) {
+                final String value = pair.getValue();
+                final String name = pair.getName();
 
-            String paramAttribute = new StringBuilder(prefix)
-                    .append(SEPARATOR)
-                    .append(PARAM_ATTRIBUTE)
-                    .append(SEPARATOR)
-                    .append(name)
-                    .toString();
+                String paramAttribute = new StringBuilder(prefix)
+                        .append(SEPARATOR)
+                        .append(PARAM_ATTRIBUTE)
+                        .append(SEPARATOR)
+                        .append(name)
+                        .toString();
 
-            e.set(paramAttribute, (value != null ? value.getBytes() : null));
+                e.set(paramAttribute, (value != null ? value.getBytes() : null));
+            }
+        } catch (IllegalArgumentException ex) {
+            LOG.warn("Unable to parse parameters for uri :'" + uri);
         }
     }
 

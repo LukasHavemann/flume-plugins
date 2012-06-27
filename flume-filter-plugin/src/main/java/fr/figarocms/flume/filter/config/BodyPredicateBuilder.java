@@ -1,16 +1,12 @@
 package fr.figarocms.flume.filter.config;
 
-import com.google.common.base.Predicate;
-
 import com.cloudera.flume.core.Event;
+import com.google.common.base.Predicate;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.google.common.base.Predicates.and;
-import static com.google.common.base.Predicates.containsPattern;
-import static com.google.common.base.Predicates.equalTo;
-import static com.google.common.base.Predicates.or;
+import static com.google.common.base.Predicates.*;
 import static com.google.common.collect.Lists.newArrayList;
 import static fr.figarocms.flume.filter.predicate.EventPredicates.hasBody;
 

@@ -1,7 +1,6 @@
 package fr.figarocms.flume.formatter;
 
 import com.cloudera.flume.handlers.text.output.OutputFormat;
-
 import org.junit.Before;
 import org.junit.Test;
 

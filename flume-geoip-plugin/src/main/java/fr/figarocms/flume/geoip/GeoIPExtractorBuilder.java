@@ -1,10 +1,9 @@
 package fr.figarocms.flume.geoip;
 
-import com.google.common.base.Preconditions;
-
 import com.cloudera.flume.conf.Context;
 import com.cloudera.flume.conf.SinkFactory;
 import com.cloudera.flume.core.EventSink;
+import com.google.common.base.Preconditions;
 import com.maxmind.geoip.LookupService;
 
 import java.io.File;

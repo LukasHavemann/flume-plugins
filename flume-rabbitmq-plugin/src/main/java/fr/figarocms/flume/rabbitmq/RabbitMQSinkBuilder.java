@@ -1,7 +1,5 @@
 package fr.figarocms.flume.rabbitmq;
 
-import com.google.common.base.Preconditions;
-
 import com.cloudera.flume.conf.Context;
 import com.cloudera.flume.conf.FlumeBuilder;
 import com.cloudera.flume.conf.FlumeSpecException;
@@ -10,7 +8,7 @@ import com.cloudera.flume.core.EventSink;
 import com.cloudera.flume.handlers.text.FormatFactory;
 import com.cloudera.flume.handlers.text.output.DebugOutputFormat;
 import com.cloudera.flume.handlers.text.output.OutputFormat;
-
+import com.google.common.base.Preconditions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

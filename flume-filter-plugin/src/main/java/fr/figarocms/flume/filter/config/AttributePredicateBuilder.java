@@ -1,17 +1,13 @@
 package fr.figarocms.flume.filter.config;
 
+import com.cloudera.flume.core.Event;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Predicate;
-
-import com.cloudera.flume.core.Event;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.google.common.base.Predicates.and;
-import static com.google.common.base.Predicates.containsPattern;
-import static com.google.common.base.Predicates.equalTo;
-import static com.google.common.base.Predicates.or;
+import static com.google.common.base.Predicates.*;
 import static com.google.common.base.Strings.isNullOrEmpty;
 import static com.google.common.base.Strings.nullToEmpty;
 import static com.google.common.collect.Lists.newArrayList;
@@ -82,21 +78,6 @@ public class AttributePredicateBuilder {
     }
   }
 
-  public void setParameters(List<ParameterPredicateBuilder> builders) {
-    Preconditions.checkState(!isNullOrEmpty(nullToEmpty(name).trim()), "An attribute name is required");
-    List<Predicate<? super String>> predicates = new ArrayList<Predicate<? super String>>();
-    if (builders != null && !builders.isEmpty()) {
-      for (ParameterPredicateBuilder builder : builders) {
-        predicates.add(builder.build());
-      }
-      if (predicates.size() == 1) {
-        this.predicates.add(containsAttribute(name, predicates.get(0)));
-      } else {
-        this.predicates.add(containsAttribute(name, and(predicates)));
-      }
-    }
-  }
-
   // ~ Build Predicate -------------------------------------------------------------------------------------------------
 
 
@@ -105,11 +86,6 @@ public class AttributePredicateBuilder {
       return predicates.get(0);
     }
     return and(this.predicates);
-  }
-
-  // Required by YAML Parser
-  public List<ParameterPredicateBuilder> getParameters() {
-    throw new RuntimeException("This getter is just defined for YAML Parser");
   }
 
 }

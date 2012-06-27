@@ -1,7 +1,6 @@
 package fr.figarocms.flume.haproxy.processor;
 
 import com.cloudera.flume.core.Event;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;

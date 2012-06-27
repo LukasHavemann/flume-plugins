@@ -1,9 +1,7 @@
 package fr.figarocms.flume.filter.predicate;
 
-import com.google.common.base.Function;
-
 import com.cloudera.flume.core.Event;
-
+import com.google.common.base.Function;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -11,9 +9,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.not;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertThat;
+import static org.junit.Assert.*;
 import static org.mockito.Mockito.when;
 
 @RunWith(value = MockitoJUnitRunner.class)

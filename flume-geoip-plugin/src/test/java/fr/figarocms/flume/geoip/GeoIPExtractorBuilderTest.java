@@ -3,9 +3,7 @@ package fr.figarocms.flume.geoip;
 
 import com.cloudera.flume.conf.Context;
 import com.cloudera.flume.core.EventSink;
-
 import junit.framework.Assert;
-
 import org.junit.Test;
 
 import static org.mockito.Mockito.mock;

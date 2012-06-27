@@ -2,7 +2,6 @@ package fr.figarocms.flume.formatter;
 
 import com.cloudera.flume.core.Event;
 import com.cloudera.flume.core.EventImpl;
-
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.type.TypeReference;
 import org.junit.Before;

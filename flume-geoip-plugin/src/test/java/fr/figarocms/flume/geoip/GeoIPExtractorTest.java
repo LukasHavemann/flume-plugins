@@ -5,9 +5,8 @@ import com.cloudera.flume.core.EventImpl;
 import com.cloudera.flume.handlers.debug.MemorySinkSource;
 import com.maxmind.geoip.Location;
 import com.maxmind.geoip.LookupService;
-
+import fr.figarocms.flume.geoip.utils.Bytes;
 import junit.framework.Assert;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -15,8 +14,6 @@ import org.mockito.MockitoAnnotations;
 import org.slf4j.Logger;
 
 import java.io.IOException;
-
-import fr.figarocms.flume.geoip.utils.Bytes;
 
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.verify;

@@ -1,10 +1,9 @@
 package fr.figarocms.flume.formatter.mapping;
 
+import com.cloudera.flume.core.Event;
 import com.google.common.base.Function;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
-
-import com.cloudera.flume.core.Event;
 
 import java.util.List;
 import java.util.Map;

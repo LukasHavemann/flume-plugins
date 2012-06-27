@@ -10,7 +10,6 @@
 package fr.figarocms.flume.hbase;
 
 import com.cloudera.util.FileUtil;
-
 import org.apache.hadoop.hbase.HBaseClusterTestCase;
 
 import java.io.File;

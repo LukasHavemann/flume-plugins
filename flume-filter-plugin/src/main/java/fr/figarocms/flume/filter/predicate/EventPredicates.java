@@ -1,14 +1,11 @@
 package fr.figarocms.flume.filter.predicate;
 
+import com.cloudera.flume.core.Event;
 import com.google.common.base.Objects;
 import com.google.common.base.Predicate;
 
-import com.cloudera.flume.core.Event;
-
 import static com.google.common.base.Preconditions.checkNotNull;
-import static com.google.common.base.Predicates.and;
-import static com.google.common.base.Predicates.compose;
-import static com.google.common.base.Predicates.notNull;
+import static com.google.common.base.Predicates.*;
 
 /**
  * A set of {@link com.google.common.base.Predicate} on Flume {@link Event}s.

@@ -1,18 +1,16 @@
 package fr.figarocms.flume.haproxy;
 
 import com.cloudera.flume.core.Event;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import fr.figarocms.flume.haproxy.exception.ProcessorException;
 import fr.figarocms.flume.haproxy.processor.Processor;
 import fr.figarocms.flume.haproxy.processor.SimpleProcessor;
 import jregex.Matcher;
 import jregex.Pattern;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Mapping {
 

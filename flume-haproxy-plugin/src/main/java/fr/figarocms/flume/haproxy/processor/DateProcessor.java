@@ -1,13 +1,11 @@
 package fr.figarocms.flume.haproxy.processor;
 
 import com.cloudera.flume.core.Event;
-
+import fr.figarocms.flume.haproxy.exception.ProcessorException;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
 import java.util.Locale;
-
-import fr.figarocms.flume.haproxy.exception.ProcessorException;
 
 public class DateProcessor extends AbstractProcessor {
 

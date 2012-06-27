@@ -1,8 +1,7 @@
 package fr.figarocms.flume.filter.config;
 
-import com.google.common.base.Predicate;
-
 import com.cloudera.flume.core.Event;
+import com.google.common.base.Predicate;
 
 import java.util.List;
 

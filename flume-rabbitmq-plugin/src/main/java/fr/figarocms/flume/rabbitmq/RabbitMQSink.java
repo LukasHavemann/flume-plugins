@@ -5,7 +5,6 @@ import com.cloudera.flume.core.Event;
 import com.cloudera.flume.core.EventSink;
 import com.cloudera.flume.handlers.text.output.OutputFormat;
 import com.cloudera.util.Pair;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

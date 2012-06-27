@@ -20,12 +20,3 @@ attributes:
 
 - name: attribute3
   pattern: 'pattern/*'
-  parameters:
-  - name: parameter1
-    value: value1
-  - name: parameter2
-    values:
-      - value2
-      - value3
-  - name: parameter3
-    dateFormat: YYYY-MM

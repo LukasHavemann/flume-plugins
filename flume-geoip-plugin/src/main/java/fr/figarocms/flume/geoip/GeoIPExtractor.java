@@ -24,15 +24,13 @@ import com.cloudera.flume.core.EventSinkDecorator;
 import com.cloudera.util.Pair;
 import com.maxmind.geoip.Location;
 import com.maxmind.geoip.LookupService;
-
+import fr.figarocms.flume.geoip.utils.Bytes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
-import fr.figarocms.flume.geoip.utils.Bytes;
 
 /**
  * @param <S>

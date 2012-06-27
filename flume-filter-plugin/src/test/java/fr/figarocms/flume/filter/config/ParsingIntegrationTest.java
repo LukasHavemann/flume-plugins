@@ -1,11 +1,10 @@
 package fr.figarocms.flume.filter.config;
 
-import com.google.common.base.Predicate;
-import com.google.common.base.Predicates;
-
 import com.cloudera.flume.core.Event;
 import com.cloudera.flume.core.EventImpl;
-
+import com.google.common.base.Predicate;
+import com.google.common.base.Predicates;
+import fr.figarocms.flume.filter.predicate.EventPredicates;
 import org.junit.Before;
 import org.junit.Test;
 import org.yaml.snakeyaml.Yaml;
@@ -14,17 +13,9 @@ import org.yaml.snakeyaml.error.YAMLException;
 
 import java.io.InputStream;
 
-import fr.figarocms.flume.filter.predicate.EventPredicates;
-import fr.figarocms.flume.filter.predicate.URIPredicates;
-
-import static com.google.common.base.Predicates.and;
-import static com.google.common.base.Predicates.equalTo;
-import static com.google.common.base.Predicates.or;
+import static com.google.common.base.Predicates.*;
 import static fr.figarocms.flume.filter.predicate.DateTimePredicates.matchesDateFormat;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class ParsingIntegrationTest {
 
@@ -241,25 +232,6 @@ public class ParsingIntegrationTest {
     final Predicate<Event> predicate = builder.build();
     assertEquals(EventPredicates.containsAttribute("attribute1", or(
         matchesDateFormat("value1"), matchesDateFormat("value2"))), predicate);
-  }
-
-  @Test
-  public void oneAttributeOneParameter() throws Exception {
-    //Given
-    String document = "attributes:\n"
-                      + "- name: attribute1\n"
-                      + "  parameters:\n"
-                      + "  - name: parameter1\n"
-                      + "    value: value1\n";
-    // When
-    EventPredicateBuilder builder = yaml.loadAs(document, EventPredicateBuilder.class);
-
-    // Then
-    assertNotNull(builder);
-    final Predicate<Event> predicate = builder.build();
-    assertEquals(EventPredicates
-                     .containsAttribute("attribute1", URIPredicates.containsParameter("parameter1", equalTo("value1"))),
-                 predicate);
   }
 
   @Test

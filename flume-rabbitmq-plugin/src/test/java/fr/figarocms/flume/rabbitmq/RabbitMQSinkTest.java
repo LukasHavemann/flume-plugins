@@ -2,7 +2,6 @@ package fr.figarocms.flume.rabbitmq;
 
 import com.cloudera.flume.core.Event;
 import com.cloudera.flume.handlers.text.output.OutputFormat;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,9 +13,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import java.io.ByteArrayOutputStream;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.only;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class RabbitMQSinkTest {

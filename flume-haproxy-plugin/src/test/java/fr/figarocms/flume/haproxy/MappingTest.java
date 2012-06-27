@@ -2,11 +2,9 @@ package fr.figarocms.flume.haproxy;
 
 import com.cloudera.flume.core.Event;
 import com.cloudera.flume.core.EventImpl;
-
-import org.junit.Test;
-
 import fr.figarocms.flume.haproxy.processor.HeaderProcessor;
 import fr.figarocms.flume.haproxy.processor.SimpleProcessor;
+import org.junit.Test;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertSame;

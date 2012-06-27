@@ -1,7 +1,6 @@
 package fr.figarocms.flume.filter.predicate;
 
 import com.cloudera.flume.core.Event;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;

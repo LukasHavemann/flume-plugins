@@ -2,7 +2,6 @@ package fr.figarocms.flume.formatter.mapping;
 
 import com.cloudera.flume.core.Event;
 import com.cloudera.flume.core.EventImpl;
-
 import org.junit.Before;
 import org.junit.Test;
 

@@ -21,9 +21,8 @@ import com.cloudera.flume.core.Event;
 import com.cloudera.flume.core.Event.Priority;
 import com.cloudera.flume.core.EventImpl;
 import com.cloudera.util.Clock;
-
+import fr.figarocms.flume.hbase.HBaseSink.QualifierSpec;
 import junit.framework.Assert;
-
 import org.apache.hadoop.hbase.HBaseTestCase;
 import org.apache.hadoop.hbase.HColumnDescriptor;
 import org.apache.hadoop.hbase.HTableDescriptor;
@@ -43,8 +42,6 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
-import fr.figarocms.flume.hbase.HBaseSink.QualifierSpec;
 
 /**
  * Test the hbase sink writes events to a table/family properly

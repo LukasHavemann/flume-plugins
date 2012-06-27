@@ -1,9 +1,8 @@
 package fr.figarocms.flume.filter.predicate;
 
+import com.cloudera.flume.core.Event;
 import com.google.common.base.Function;
 import com.google.common.base.Objects;
-
-import com.cloudera.flume.core.Event;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 

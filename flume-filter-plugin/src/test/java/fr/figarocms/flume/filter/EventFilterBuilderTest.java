@@ -1,7 +1,6 @@
 package fr.figarocms.flume.filter;
 
 import com.cloudera.flume.conf.Context;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

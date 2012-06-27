@@ -22,14 +22,12 @@ import com.cloudera.flume.conf.FlumeSpecException;
 import com.cloudera.flume.conf.LogicalNodeContext;
 import com.cloudera.flume.conf.SinkFactory.SinkBuilder;
 import com.cloudera.flume.conf.SinkFactoryImpl;
-
+import fr.figarocms.flume.hbase.HBaseSink.QualifierSpec;
 import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import fr.figarocms.flume.hbase.HBaseSink.QualifierSpec;
 
 import static org.junit.Assert.assertEquals;
 

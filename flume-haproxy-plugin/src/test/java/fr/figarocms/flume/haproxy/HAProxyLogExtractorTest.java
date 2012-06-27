@@ -3,7 +3,6 @@ package fr.figarocms.flume.haproxy;
 import com.cloudera.flume.core.Event;
 import com.cloudera.flume.core.EventImpl;
 import com.cloudera.flume.handlers.debug.MemorySinkSource;
-
 import org.junit.Test;
 
 import java.io.IOException;

@@ -17,24 +17,21 @@
  */
 package fr.figarocms.flume.haproxy;
 
-import com.google.common.base.Preconditions;
-
 import com.cloudera.flume.conf.Context;
 import com.cloudera.flume.conf.SinkFactory.SinkDecoBuilder;
 import com.cloudera.flume.core.Event;
 import com.cloudera.flume.core.EventSink;
 import com.cloudera.flume.core.EventSinkDecorator;
 import com.cloudera.util.Pair;
-
+import com.google.common.base.Preconditions;
+import fr.figarocms.flume.haproxy.processor.DateProcessor;
+import fr.figarocms.flume.haproxy.processor.HeaderProcessor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
-import fr.figarocms.flume.haproxy.processor.DateProcessor;
-import fr.figarocms.flume.haproxy.processor.HeaderProcessor;
 
 
 public class HAProxyLogExtractor<S extends EventSink> extends EventSinkDecorator<S> {

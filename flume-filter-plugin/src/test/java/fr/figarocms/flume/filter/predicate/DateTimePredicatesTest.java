@@ -1,7 +1,6 @@
 package fr.figarocms.flume.filter.predicate;
 
 import com.google.common.base.Predicate;
-
 import org.junit.Test;
 
 import static org.junit.Assert.assertFalse;

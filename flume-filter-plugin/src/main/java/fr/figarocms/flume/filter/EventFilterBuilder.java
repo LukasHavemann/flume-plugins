@@ -1,10 +1,9 @@
 package fr.figarocms.flume.filter;
 
-import com.google.common.base.Preconditions;
-
 import com.cloudera.flume.conf.Context;
 import com.cloudera.flume.conf.SinkFactory;
-
+import com.google.common.base.Preconditions;
+import fr.figarocms.flume.filter.config.EventPredicateBuilder;
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.error.YAMLException;
 
@@ -12,8 +11,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.net.URL;
-
-import fr.figarocms.flume.filter.config.EventPredicateBuilder;
 
 public class EventFilterBuilder extends SinkFactory.SinkDecoBuilder {
 

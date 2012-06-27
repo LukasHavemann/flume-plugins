@@ -1,10 +1,9 @@
 package fr.figarocms.flume.formatter;
 
-import com.google.common.base.Preconditions;
-
 import com.cloudera.flume.handlers.text.FormatFactory;
 import com.cloudera.flume.handlers.text.output.OutputFormat;
-
+import com.google.common.base.Preconditions;
+import fr.figarocms.flume.formatter.config.Formatter;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,8 +14,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.net.URL;
-
-import fr.figarocms.flume.formatter.config.Formatter;
 
 public class JsonObjectFormatterBuilder extends FormatFactory.OutputFormatBuilder {
 

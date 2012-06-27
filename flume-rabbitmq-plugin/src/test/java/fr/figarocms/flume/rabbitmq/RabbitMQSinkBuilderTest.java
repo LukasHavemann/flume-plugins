@@ -2,7 +2,6 @@ package fr.figarocms.flume.rabbitmq;
 
 import com.cloudera.flume.conf.Context;
 import com.cloudera.flume.core.EventSink;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
